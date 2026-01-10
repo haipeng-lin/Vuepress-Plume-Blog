@@ -2,10 +2,10 @@ import { defineClientConfig } from 'vuepress/client';
 import { clickEffect3 } from './custom.js';
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css'
-import './public/css/index.css'
-import './public/css/custom.css'
+// import './public/css/index.css'
+// import './public/css/custom.css'
 
-import { getPV } from "./public/api/tongji-data.js";
+// import { getPV } from "./public/api/tongji-data.js";
 
 import FootMap from "./component/FootMap.vue";
 import MyPlayer from "./component/MyPlayer.vue"
