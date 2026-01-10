@@ -1,0 +1,568 @@
+---
+title: Flowable工作流
+createTime: 2025/01/17 13:41:38
+permalink: /frame-work/第三方框架/83te9b84/
+---
+
+
+
+
+## 1.前言
+
+### 1.1 Flowable介绍
+
+1. Flowable是WorkFlow的一种工作流
+2. WorkFlow，即工作流，对于一项业务，按照规定的流程，逐级传递、申请、执行等，并且受到了严格控制的一种业务过程
+3. Flowable，是一款轻量级的工作流引擎，启动快、体积小，且可以嵌入Java应用中使用
+4. [Flowable官方中文文档](https://tkjohn.github.io/flowable-userguide/#_introduction)
+
+### 1.2 重要概念
+
+1. **流程模型**：Model，即描述整个流程的过程，为流程图或bpmn
+2. **流程定义**：ProcessDefinition，将一个流程模型，即 XML 文件或流程图，部署到 flowable 中，这就是一个定义好的流程了，基于这个定义好的流程，我们可以开启很多流程实例
+3. **流程实例**：ProcessInstance，即一个流程对象，例如每一次申请请假，就是一个流程实例
+4. **执行实例**：Execution，在一个流程中，出口和入口是一个流程实例的节点，而中间的过程则是执行实例
+5. **流程变量**：流程实例里面设置的变量名、变量值
+
+### 1.3 使用步骤
+
+1. 建立流程模型，描述整个流程的过程，可生成流程图或bpmn文件
+2. 部署流程模型，生成流程定义，并绑定关联的业务表
+3. 启动指定的流程实例，每一次申请请假，即启动一个流程实例
+4. 任务节点指定的审批人或组的key获取待办列表，审批该节点
+5. 自动到下一个节点指定的审批人或组，审批人查询节点已办列表。
+
+## 2.全局配置说明
+
+### 2.1 数据库表说明
+
+1. Flowable的所有数据库表都以**ACT_**开头。第二部分是说明表用途的两字符标示符。
+2. **ACT_RE_**: 'RE’代表repository。带有这个前缀的表包含“静态”信息，例如流程定义与流程资源（图片、规则等）。
+3. **ACT_RU_**: 'RU’代表runtime。这些表存储运行时信息，例如流程实例（process instance）、用户任务（user task）、变量（variable）、作业（job）等。Flowable只在流程实例运行中保存运行时数据，并在流程实例结束时删除记录。这样保证运行时表小和快。
+4. **ACT_HI_**: 'HI’代表history。这些表存储历史数据，例如已完成的流程实例、变量、任务等。
+5. **ACT_GE_**: 通用数据。在多处使用。
+
+| 表分类         | 表名                  | 表说明                   |
+| -------------- | --------------------- | ------------------------ |
+| 一般数据(2)    | ACT_GE_BYTEARRAY      | 通用的流程定义和流程资源 |
+|                | ACT_GE_PROPERTY       | 系统相关属性             |
+| 流程定义表(3)  | ACT_RE_MODEL          | 流程模型                 |
+|                | ACT_RE_DEPLOYMENT     | 流程部署表               |
+|                | ACT_RE_PROCDEF        | 流程定义表               |
+| 运行实例表(10) | ACT_RU_EXECUTION      | 运行时流程实例           |
+|                | ACT_RU_VARIABLE       | 运行时变量表             |
+|                | ACT_RU_DEADLETTER_JOB | 正在运行任务表           |
+|                | ACT_RU_HISTORY_JOB    | 历史作业表               |
+|                | ACT_RU_SUSPENDED_JOB  | 暂停作业表               |
+|                | ACT_RU_TIMER_JOB      | 定时作业表               |
+|                | ACT_RU_JOB            | 运行时作业表             |
+|                | ACT_RU_TASK           | 运行时任务表             |
+|                | ACT_RU_EVENT_SUBSCR   | 运行时事件               |
+|                | ACT_RU_IDENTITYLINK   | 运行时用户关系信息       |
+
+### 2.2 BPMN文件说明（了解）
+
+#### 2.2.1 BPMN定义
+
+1. BPMN（Business Process Modeling Notation，即业务流程建模符号），是一种流程建模的通用和标准语言，用来绘制业务流程图，以便更好地让各部门之间理解业务流程和相互关系。
+
+#### 2.2.2 BPMN基础元素
+
+1. BPMN基础元素有四种：**流对象、数据、连接对象、泳道**
+2. **流对象**：流对象：定义业务流程的主要图形元素，包括三种：事件、活动、网关
+
+3. 1. **事件**：指的是在业务流程的运行过程中发生的事情，分为：开始、中间、结束
+	2. **活动**：包括任务和子流程两类。
+	3. **网关**：排他网关、并行网关、包容网关（同时执行多条线路，也可以在网关上设置条件）、事件网关：专门为中间捕获事件设置的，允许设置多个输出流指向多个不同的中间捕获事件。当流程执行到事件网关后，流程处于等待状态，需要等待抛出事件才能将等待状态转换为活动状态
+
+4. **数据**：数据主要通过四种元素表示，如数据对象、数据输入、数据输出、数据存储
+5. **连接对象**：流对象彼此互相连接或者连接到其他信息的方法主要有三种
+
+6. 1. 顺序流：用一个带实心箭头的实心线表示，用于指定活动执行的顺序
+	2. 信息流：用一条带箭头的虚线表示，用于描述两个独立的业务参与者（业务实体/业务角色）之间发送和接受的消息流动
+	3. 关联：用一根带有线箭头的点线表示，用于将相关的数据、文本和其他人工信息与流对象联系起来。用于展示活动的输入和输出
+
+7. **泳道**：通过泳道对主要的建模元素进行分组，将活动划分到不同的可视化类别中来描述由不同的参与者的责任与职责
+
+
+
+## 3.使用Flowable实现请假流程
+
+### 3.1 部署测试环境
+
+1. 我们使用开源的若依框架，来实现Flowable请假流程
+2. 线上演示地址：http://43.138.9.96/（账号：admin；密码：admin123）
+3. 后端部署：
+	1. 代码地址：https://gitee.com/dromara/RuoYi-Vue-Plus.git
+	2. 配置数据库
+	3. 启动SpringBoot
+4. 前端部署：
+	1. 代码地址：https://gitee.com/JavaLionLi/plus-ui.git
+	2. npm install 命令安装依赖
+	3. npm run dev 命令启动
+
+### 3.2 工作流/我的任务菜单
+
+<img src="https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201748441.png" alt="image-20240713161152875"  />
+
+1. 工作流目录（上一张图右边）：
+	1. 流程分类：定义流程所属的类别，例如OA、请假、预算申请等待
+	2. 模型管理：用于设计流程，包括设置任务节点审批人、节点监听器等等
+	3. 流程定义：一个流程模型部署之后，就是定义好了的流程，基于这个定义好的流程，我们可以开启很多流程实例
+	4. 流程监控：可以查到所有流程实例以及待办任务（上帝视角）
+	5. 表单管理：可新增表单（填写表单名、路由地址），用于设计流程时候，给第一个节点绑定表单（作用：审批人，点击办理任务时，可通过该路由跳转到对面的页面，并展示对应的审批数据）
+2. 我的任务目录（左边）：可以查看我的发起、待办、已办、抄送 的流程
+
+### 3.3 设计请假流程
+
+1. 工作流——>模型管理——>新增模型——>设计流程
+
+2. 定义请假流程模型，并定义用户任务节点（绑定审核人、业务表）
+
+3. 如图：
+
+	1. 申请请假节点绑定表单
+
+		![image-20240713162327297](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201748216.png)
+
+	2. 组长审批节点 绑定用户编号为1的用户：admin
+
+		![image-20240713162422178](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201748768.png)
+
+
+
+### 3.4 绑定业务表
+
+![image-20240713162817005](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201748770.png)
+
+### 3.5 申请请假
+
+1. 申请人填写请假表单并提交
+
+![image-20240713162929910](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201748901.png)
+
+### 3.6 节点审批人审批
+
+1. 我的待办——>办理——>查看请假申请数据
+
+2. 审批人可以查看流程图、审批记录
+
+3. 流程图：
+
+	![image-20240713163622295](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749728.png)
+
+4. 审批记录：
+
+	![image-20240713163646667](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749639.png)
+
+#### 3.6.1 审批动作
+
+1. 提交：提交任务，交给下一个任务节点
+2. 委托：将任务分给新的审批人处理，此时委派人不能审核，等新的审批人处理后，该任务还是会回到委派人手上（向前加签）
+3. 转办：将任务转办给别的人员审核，任务的分配人更改成新的审核人，新的审核人审核人，该任务不会回到原来的转办人上（向后加签）
+4. 终止：结束请假流程
+5. 退回：可退回该节点前面的任意一个节点
+
+<img src="https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749814.png" alt="image-20240713163138093" style="zoom:67%;" />
+
+#### 3.6.2 流程状态
+
+1. 草稿：申请人已经填写表单了，但是还没有发起流程
+2. 待审核：申请填写表单并发起流程
+3. 已完成：所有审批节点都已审批完成，整个流程结束
+4. 已退回：其中一个节点的审批人将流程退回到前面的任意一个节点
+5. 已撤销：申请人撤销申请
+
+
+
+## 4.任务监听器、执行监听器
+
+### 4.1 任务监听器
+
+1. 任务监听器，即用于**监听任务**，可以**监听任务的创建、分配、完成、以及删除**共四个事件。
+2. TaskListener 的事件类型和执行时机是与任务相关的，它可以**访问任务相关的信息，并可以对任务进行操作**（例如设置任务的执行人、指定任务的代理人等），因此通常用于处理与任务相关的事件。
+3. **事件触发类型**：
+	1. create（创建）:在任务被创建且所有的任务属性设置完成后才触发
+	2. assignment（指派）：在任务被分配给某个办理人之后触发
+	3. complete（完成）：在配置了监听器的上一个任务完成时触发
+	4. delete（删除）：在任务即将被删除前触发。请注意任务由completeTask正常完成时也会触发
+4. **事件类型**：
+	1. 类 (示例：com.owater.demoflowable.listener.FlowExecutionListener)
+	2. 表达式（使用的是Spring EL表达式）
+	3. 委托表达式
+
+### 4.2 执行监听器
+
+1. 执行监听器，针对整个流程实例的事件监听器，它可以**监听流程实例启动、结束、活动开始、活动结束、连线选择**等事件。
+2. ExecutionListener 的事件类型和执行时机都是固定的，**它不能直接访问任务相关的信息（例如任务的候选人、任务的执行者等）**，因此通常用于处理与流程实例相关的事件。
+3. **事件触发类型**：启动(start)、结束(end)、在用(take)
+4. **事件类型**：
+	1. 类(示例：com.owater.demoflowable.listener.FlowExecutionListener)
+	2. 表达式（使用的是Spring EL表达式）
+	3. 委托表达式
+
+![img](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749979.png)
+
+1. 区分点：
+	1. 能否访问任务相关信息（任务候选人、任务执行者）：
+		1. 执行监听器是针对**整个流程实例**的事件监听器，它可以监听流程实例启动、结束、活动开始、活动结束、连线选择等事件；执行时机都是固定的，它不能直接访问任务相关的信息
+		2. 任务监听器可以访问
+2. 作用：
+	1. 动态分配节点处理人。通过前一个节点设置的变量，在运行到下一个节点时设置对应的处理人；
+	2. 当流程运行到某个节点时，发送邮件或短信给待办用户；
+
+### 4.3 配置任务/执行监听器
+
+#### 4.3.1 新增任务监听器
+
+```java
+package org.dromara.workflow.listener;
+
+/**
+ * 自定义任务监听器
+ */
+@Slf4j
+@Component()
+public class MyTaskListener implements TaskListener {
+
+    public void notify(DelegateTask delegateTask) {
+        System.out.println("============自定义任务监听器 start============");
+        String taskDefinitionKey = delegateTask.getTaskDefinitionKey();
+        String eventName = delegateTask.getEventName();
+        System.out.println("事件名称：" + eventName);
+        System.out.println("监听器：" + taskDefinitionKey);
+        System.out.println("============自定义任务监听器 end============");
+    }
+}
+```
+
+#### 4.3.2 新增执行监听器
+
+```java
+package org.dromara.workflow.listener;
+/**
+ *  自定义执行监听器
+ */
+@Slf4j
+@Component
+public class MyExecutionListener implements ExecutionListener {
+
+    @Override
+    public void notify(DelegateExecution execution)  {
+        System.out.println("============自定义执行监听器 start============");
+        String eventName = execution.getEventName();
+        String currentActivitiId = execution.getCurrentActivityId();
+        System.out.println("事件名称：" + eventName);
+        System.out.println("执行器：" + currentActivitiId);
+
+
+        System.out.println("============自定义执行监听器  end============");
+    }
+
+}
+```
+
+#### 4.3.2 任务节点配置任务/执行监听器
+
+##### （1）选择类的类型
+
+1. 选择监听器触发事件
+2. 选择类型：类/表达式/委托表达式
+3. 类：填写监听器所在包路径+类名
+
+![image-20240717210007603](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749815.png)
+
+![image-20240717210127019](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749341.png)
+
+![image-20240717210218280](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749795.png)
+
+##### （2）使用表达式类型
+
+![image-20240717211629825](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749515.png)
+
+1. Flowable 的表达式语法类似Spring EL， 
+2. ${testExpress.test()} testExpress代表对象名，因为@Component生成的对象名默认以类名称命名
+3. testExpress.test() 代表调用testExpress的test()方法
+
+```java
+@Slf4j
+@Component
+public class TestExpress {
+
+    public void test() {
+        log.info("TestExpress被调用了");
+    }
+
+}
+```
+
+##### （3）使用委托表达式
+
+![image-20240717211805590](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749350.png)
+
+1. ${flowTaskListener} 映射 命名为 flowTaskListener 的对象
+
+	```java
+	@Slf4j
+	@Component
+	public class FlowTaskListener implements TaskListener {
+	
+	    @Override
+	    public void notify(DelegateTask delegateTask) {
+	        log.info("任务监听器:{}", delegateTask);
+	    }
+	
+	}
+	
+	```
+
+### 4.4 测试
+
+1. 填写一个请假表单，流程到达组长审批 节点，触发任务监听器和执行监听器
+2. 首先触发start事件，调用我们自定义的执行监听器，随后触发assignment和create事件，执行自定义任务监听器的内容
+
+![image-20240717204543506](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749112.png)
+
+3. 当组长审批节点 提交后，观看控制台输出：==首先触发complete事件再触发delete事件，最后触发end事件==。
+
+![image-20240717210607506](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201749220.png)
+
+### 4.5 小结
+
+1. ExecutionListener 和 TaskListener 都是 Flowable 提供的事件监听器，TaskListener 是针对任务的事件监听器，ExecutionListener 是针对整个流程实例的事件监听器
+2. 任务监听器有四个触发事件：指派、创建、完成、删除
+3. 执行监听器有三个触发事件：开始、结束、启用
+4. 若一个任务节点同时设置任务/执行监听器，触发顺序如下：
+	1. 流程到达该节点：执行监听器的开始事件——>任务监听器的指派、创建事件
+	2. 该节点提交：任务监听器的完成、删除事件——>执行监听器的结束事件
+5. 后面将学习flowable的任务多实例、节点会签/或签、审批动作（委托、转办、退回、终止等）
+
+## 5.多任务实例节点实现会签/或签
+
+### 5.1 会签/或签概念
+
+1. 我们在本篇中，将使用多任务实例实现会签和或签功能
+2. 会签：多个用户去执行同一个任务，需要全部用户执行完，才会放行
+3. 或签：多个用户去执行同一个任务，只要有一个用户执行完，就可以放行
+
+### 5.2 多实例配置说明
+
+![image-20240717221006000](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750680.png)
+
+1. **多任务实例类型：**
+
+	1. 无：该节点只会创建一个实例
+	2. 串行：表示该任务节点的多个实例需要按照顺序一个接一个地执行（该节点设置的审批人一个提交，下一个审批人收到）
+	3. 并行：表示该任务节点的多个实例可以同时执行（该节点设置的审批人可以同时审核）
+
+2. **集合、变量、完成条件**
+
+	1. 集合：有多少个元素，就会创建多少个任务实例（**指定用于创建多实例的数据源，通过==执行监听器，将候选人添加到流程变量中，再从流程变量中获取==**）
+
+	2. 变量：集合中的每一个元素的命名
+
+	3. 完成条件：会签和或签的完成条件
+
+		1. ==nrOfCompletedInstances: 完成的任务实例数==
+		2. ==nrOfInstances: 总共生成的任务实例数(根据会签、或签指定的人数生成相应的任务数)==
+		3. nrOfActiveInstance: 未完成实例的数目
+		4. loopCounter: 循环计数器，办理人在列表中的索引
+
+		> 当是或签时，直接固定配置： ${nrOfCompletedInstances>=1} 即可
+		>
+		> 当是会签时，固定配置： ${nrOfCompletedInstances==nrOfInstances} 即可
+
+3. ==任务人员分配：${变量名}，从多任务实例配置的变量取！==
+
+	![image-20240717221051285](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750562.png)
+
+### 5.3 会签例子
+
+#### 5.3.1 用户候选人配置
+
+![image-20240717221248751](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750388.png)
+
+#### 5.3.2 多实例配置
+
+![image-20240717221410818](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750792.png)
+
+#### 5.3.3 执行监听器配置
+
+![image-20240717221502846](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750446.png)
+
+```java
+/**
+ * @Author haipeng_lin
+ * @Mailbox haipeng_lin@163.com
+ * @Date 2024/7/17 22:02
+ * @Description 多实例任务监听器
+ */
+@Component
+@Slf4j
+public class MultiInstanceListener implements ExecutionListener {
+    @Override
+    public void notify(DelegateExecution execution) {
+        FlowElement element = execution.getCurrentFlowElement();
+        if (element instanceof UserTask) {
+            UserTask userTask = (UserTask) element;
+            List<String> candidateUsers = userTask.getCandidateUsers();
+
+            // 多任务时，每个任务都会执行一次这个监听器，所以更新、插入操作需要小心，避免重复操作
+            Object flag = execution.getVariable(userTask.getId().concat("_approverList"));
+            if (flag==null) {
+                log.info("candidateUsers value: {}", candidateUsers.toString());
+                // userTask.getId() 就是节点定义ID，拼上它，可以解决一个流程里面多个审批节点问题
+                execution.setVariable(userTask.getId().concat("_approverList"), candidateUsers);
+            }
+        }
+    }
+}
+```
+
+#### 5.3.4 测试
+
+1. 发起请假申请流程，查看流程图，同一任务节点有多个实例：
+
+![image-20240717222325504](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750693.png)
+
+2. 任意一个组长审批节点 审批提交
+
+	![image-20240717222800394](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750324.png)
+
+3. 如图：需要全部节点审批完，才可以到达部门审批节点
+
+	![image-20240717223021146](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750386.png)
+
+
+
+## 6.审批动作：提交/委托/转办/退回/终止
+
+### 6.1 环境搭建
+
+1. 如图为使用flowable工作流搭建申请请假流程：
+
+![image-20240718202254257](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750364.png)
+
+### 6.2 审批动作
+
+1. 提交：提交任务，交给下一个任务节点
+2. 委托：将任务分给新的审批人处理，此时委派人不能审核，等新的审批人处理后，该任务还是会回到委派人手上
+3. 转办：将任务转办给新的审批人审核，任务的分配人更改成新的审批人，新的审批人审核后，该任务不会回到原来的转办人上
+4. 终止：结束请假流程
+5. 退回：可退回该节点前面的任意一个节点
+
+![image-20240718202559148](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201750273.png)
+
+#### 6.2.1 委托
+
+1. 首先查看数据库表：act_ru_task表，即正在运行的任务表，此时任务的分配者为用户1
+
+![image-20240718203722512](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751064.png)
+
+2. 用户编号为1的用户admin将任务委托给用户编号为3的用户test
+
+![image-20240718203029126](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751691.png)
+
+3. 查看数据库表：act_ru_task表，即正在运行的任务表
+4. 可以看出该任务，被用户1委托给用户3了，delegation 字段值为pending：等待
+
+![image-20240718203243790](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751019.png)
+
+4. 此时，用户3提交任务，查看数据库表：act_ru_task表，delegation 字段值为RESOLVED：解决
+5. 可以看出该任务，回到用户1手上了，用户1还需要审批
+
+![image-20240718203822407](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751457.png)
+
+6. **查看审批记录：**
+
+![image-20240718204909958](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751109.png)
+
+#### 6.2.2 转办
+
+1. 首先查看数据库表：act_ru_task表，即正在运行的任务表，此时任务的分配者为用户1
+
+![image-20240718204156148](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751477.png)
+
+2. 用户编号为1的用户admin将任务委托给用户编号为3的用户test
+3. 查看数据库表：act_ru_task表，即正在运行的任务表
+4. 可以看出该任务，被用户1转办给用户3了，直接修改ASSIGNEE字段为3，即任务分配者为用户3，相当于直接把任务给了用户3
+5. 当用户3提交审批任务，该任务不会回到用户1手上！
+
+![image-20240718204616136](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751025.png)
+
+6. **查看审批记录：**
+
+![image-20240718205132112](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751555.png)
+
+#### 6.2.3 退回
+
+1. 目前请假申请流程已经到达了部门审批节点：
+
+![image-20240718205434615](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751261.png)
+
+2. 部门审批回退选择：可退回至申请请假 or 组长审批节点
+3. 若退回至申请请假节点，申请人需要重新提交！
+4. 若退回至组长审批节点，组长需要重新提交！
+
+![image-20240718205518919](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751710.png)
+
+
+
+#### 6.2.4 终止
+
+1. 目前请假申请流程已经到达了部门审批节点：
+
+![image-20240718205434615](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751580.png)
+
+2. 部门终止流程，查看审批记录
+
+![image-20240718205843128](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751097.png)
+
+### 6.3 小结
+
+1. 提交：提交任务，交给下一个任务节点
+2. 委托：将任务分给新的审批人处理，此时委派人不能审核，等新的审批人处理后，该任务还是会回到委派人手上
+3. 转办：将任务转办给新的审批人审核，任务的分配人更改成新的审批人，新的审批人审核后，该任务不会回到原来的转办人上
+4. 终止：结束请假流程
+5. 退回：可退回该节点前面的任意一个节点
+
+
+
+## 7.并行网关实现会签
+
+### 7.1 并行网关
+
+1. 并行网关：允许我们定义多个并行执行的路径。当流程到达并行网关时，它会为每个出站顺序流创建一个新的执行分支
+2. 每个分支独立执行，直到它们到达另一个并行网关（收集完成的分支）
+3. 需要多个分支任务完成之后，才能到达下一个任务节点：部门审批
+
+### 7.2 环境搭建
+
+![image-20240718212859648](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751712.png)
+
+
+
+### 7.3 测试
+
+1. 新增请假流程、查看审批记录：
+
+![image-20240718213249052](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201751043.png)
+
+2. 其中一个节点审批，查看审批记录
+
+![image-20240718213340318](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201752673.png)
+
+3. 两个节点均提交，查看审批记录：
+
+![image-20240718213416168](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/202503201752754.png)
+
+
+
+### 7.4 新增委托或签功能
+
+1. 新增委托或签功能：A将任务委托给B处理，A和B能同时改（或签）
+2. 思路一：流程启动后，动态增加任务节点，并重新部署流程文件和修改数据库信息
+3. 思路二：使用中间信号事件和包容网关实现
+
+
+
