@@ -63,12 +63,16 @@ yum install certbot -y
 - -d：要申请证书的域名
 
 ```shell
-certbot certonly --server https://acme-v02.api.letsencrypt.org/directory --manual --preferred-challenges dns --email haipeng_lin@163.com --agree-tos -d haipeng-lin.cn
+certbot certonly \
+--server https://acme-v02.api.letsencrypt.org/directory \
+--manual --preferred-challenges dns \
+--agree-tos \
+--email haipeng_lin@163.com \
+-d haipeng-lin.cn \
+-d *.haipeng-lin.cn
 ```
 
 到 服务器添加一条 DNS域名解析记录：
-
-
 
 添加完毕，回车，便会出现证书路径：
 
@@ -126,7 +130,7 @@ yum install python3-certbot-dns-cloudflare -y
 ### 创建凭证文件
 
 ```shell
-mkdir /etc/letsencrypt/cloudflare.ini
+touch /etc/letsencrypt/cloudflare.ini
 chmod 600 /etc/letsencrypt/cloudflare.ini
 ```
 
