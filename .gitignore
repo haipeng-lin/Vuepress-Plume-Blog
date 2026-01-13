@@ -11,7 +11,6 @@
 /docs/.vuepress/.cache
 /docs/.vuepress/.temp
 /docs/.vuepress/dist
-/docs/.vuepress/public
 
 .DS_Store
 dump.rdb

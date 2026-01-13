@@ -26,7 +26,7 @@ export default defineUserConfig({
         // 全局配置变量
         [ 'script', {}, `window.DENG_CONFIG = { text: '元旦快乐' };` ],
         // 灯笼脚本
-        [ 'script', { type: 'text/javascript', src: '/js/denglong.js' } ],
+            // [ 'script', { type: 'text/javascript', src: '/js/denglong.js' } ],
         [ 'link', { rel: 'icon', type: 'image/png', size: '32x32', href: '/images/avatar.jpg' } ],
         [ 'link', { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css' } ],
         [ 'link', { rel: 'stylesheet', href: 'https://fontsapi.zeoseven.com/292/gb-regular/result.css' } ],

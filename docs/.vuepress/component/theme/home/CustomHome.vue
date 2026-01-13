@@ -23,7 +23,7 @@
         <!-- 第二行 -->
         <div class="about-me-3-2-row">
           <AboutMeSkill />
-          <!-- <AboutMeLife /> -->
+          <AboutMeLife />
         </div>
 
         <!-- 第三行 -->
@@ -64,7 +64,7 @@ import AboutMe from "./AboutMe.vue";
 import AboutMeText from "./AboutMeText.vue";
 import AboutMeSkill from "./AboutMeSkill.vue";
 import AboutMeCharacter from "./AboutMeCharacter.vue";
-// import AboutMeLife from "./AboutMeLife.vue";
+import AboutMeLife from "./AboutMeLife.vue";
 import AboutMeFriendLink from "./AboutMeFriendLink.vue";
 
 interface Comet {

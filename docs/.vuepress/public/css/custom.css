@@ -1,0 +1,25 @@
+/* container：最大宽度 */
+/* @media (min-width: 1440px) {
+    .vp-doc-container:not(.has-sidebar) .container[data-v-d64b92aa] {
+        max-width: 2000px !important
+    }
+} */
+
+/* content：最大宽度 */
+/* @media (min-width: 1440px) {
+    .vp-doc-container.is-posts:not(.has-sidebar.has-aside) .content {
+        max-width: 2000px !important
+    }
+} */
+
+/* .vp-doc-container.has-aside .content-container {
+    max-width: 100% !important;
+}
+
+@media (min-width: 960px) {
+    .vp-doc-container:not(.has-sidebar) .container {
+        display: flex;
+        justify-content: center;
+        max-width: 100% !important;
+    }
+} */
