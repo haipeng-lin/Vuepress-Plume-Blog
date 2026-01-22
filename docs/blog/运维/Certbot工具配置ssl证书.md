@@ -4,16 +4,19 @@ createTime: 2025/12/04 23:52:53
 permalink: /blog/cfyw739h/
 cover: https://img.haipeng-lin.cn/20251214184352.jpg
 coverStyle:
-    layout: left
-    ratio: '16:9'
-    width: 300
+  layout: left
+  ratio: "16:9"
+  width: 300
 excerpt: 配置自动化部署ssl证书的工具：Certbot
 tags:
-    - 运维
+  - 运维
+show: true
+articleGPT: 这篇文章讲了在 Alibaba Cloud Linux 3 环境下使用 Certbot 配置 SSL 证书的流程。作者记录了解决 EPEL 源冲突的方法，详述了从手动申请泛域名证书，到进阶利用 Cloudflare API 实现全自动续期与 Nginx 自动重载的运维实战步骤，提供了完整的自动化部署方案。
 ---
+
 ## 环境信息
 
->  **Alibaba Cloud Linux 3**
+> **Alibaba Cloud Linux 3**
 
 ## 安装 Certbot
 
@@ -29,7 +32,7 @@ sudo yum install epel-release -y
 
 ```sh
 Last metadata expiration check: 6:19:57 ago on Mon 01 Dec 2025 09:28:37 AM CST.
-Error: 
+Error:
  Problem: problem with installed package epel-aliyuncs-release-8-15.1.al8.noarch
 
   - package epel-aliyuncs-release-8-15.1.al8.noarch from @System conflicts with epel-release provided by epel-release-8-22.el8.noarch from epel
@@ -55,7 +58,7 @@ yum install certbot -y
 申请的证书可分为两种：
 
 - 主域名：如 haipeng-lin.cn
-- 泛域名：如 *.haipeng-lin.cn，适配 admin.haipeng-lin.cn、blog.haipeng-lin.cn 等等
+- 泛域名：如 \*.haipeng-lin.cn，适配 admin.haipeng-lin.cn、blog.haipeng-lin.cn 等等
 
 申请命令如下：
 
@@ -72,18 +75,19 @@ certbot certonly \
 -d *.haipeng-lin.cn
 ```
 
-到 服务器添加一条 DNS域名解析记录：
+到 服务器添加一条 DNS 域名解析记录：
 
 添加完毕，回车，便会出现证书路径：
 
 ```shell
-/etc/letsencrypt/live/haipeng-lin.cn/fullchain.pem; 
+/etc/letsencrypt/live/haipeng-lin.cn/fullchain.pem;
 /etc/letsencrypt/live/haipeng-lin.cn/privkey.pem;
 ```
 
 ## 续签证书
 
 注意，该命令不是自动续签命令，仅仅是续签命令
+
 ```shell
 certbot certonly --force-renewal --manual -d '*.haipeng-lin.cn' \
 --preferred-challenges dns \
@@ -175,7 +179,7 @@ certbot -e
 0 3 * * * certbot renew -q
 ```
 
-每天凌晨3点静默执行命令：certbot renet
+每天凌晨 3 点静默执行命令：certbot renet
 
 - 如果证书还没到期（剩余时间 > 30 天）：不用申请证书
 - 否则，后台静默完成 DNS 挑战、下载新证书、替换旧证书，并触发之前设置的 `deploy-hook`（重启 Nginx）
@@ -185,4 +189,3 @@ certbot -e
 ```shell
 certbot -l
 ```
-

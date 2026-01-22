@@ -33,8 +33,7 @@
               <slot name="motto">
                 <p class="about-me-card-title-normal">𝓈𝓁𝑜𝑔𝒶𝓃</p>
                 <p class="about-me-card-text-big">
-                  前方是<span style="color: #3a5ccc">未知</span
-                  >&ensp;迎面是<span style="color: #3a5ccc">海风</span>
+                  前方是<span style="color: #3a5ccc">未知</span>&ensp;迎面是<span style="color: #3a5ccc">海风</span>
                 </p>
                 <p class="about-me-card-text-big">
                   塞壬的歌会诱人忘记<span style="color: #d53737">初衷</span>
@@ -58,8 +57,6 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
-//
-
 import AboutMe from "./AboutMe.vue";
 import AboutMeText from "./AboutMeText.vue";
 import AboutMeSkill from "./AboutMeSkill.vue";

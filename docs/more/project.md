@@ -15,8 +15,12 @@ createTime: 2026/01/09 16:34:27
 
 ## 学习项目
 
+### 数字人
+
 <CardGrid>
   <RepoCard repo="kleinlee/DH_live" provider="github" />
+  <RepoCard repo="Marthkoper/HeyGem" provider="gitee" />
+
 </CardGrid>
 
 ## 模板框架

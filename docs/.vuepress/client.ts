@@ -9,16 +9,21 @@ import { getPV } from "./public/api/tongji-data.js";
 
 import FootMap from "./component/FootMap.vue";
 import Movie from "./component/Movie.vue";
-
+import ArticleGPT from "./component/ArticleGPT.vue";
+import SakuraManager from "./component/SakuraManager.vue";
+import Poem from "./component/Poem.vue";
 import CustomHome from "./component/theme/home/CustomHome.vue";
-import VPPosts from "../../node_modules/vuepress-theme-plume/lib/client/components/Posts/VPPosts.vue";
+
 import RepoCard from "vuepress-theme-plume/features/RepoCard.vue";
+
+import VPPosts from "../../node_modules/vuepress-theme-plume/lib/client/components/Posts/VPPosts.vue";
 
 import { useRoute } from "vue-router";
 
 import { onMounted, watch, reactive } from "vue";
 const stats = reactive({
   pvData: {},
+  ai: {},
 });
 
 export default defineClientConfig({
@@ -28,11 +33,15 @@ export default defineClientConfig({
     // 其他逻辑
     app.component("FootMap", FootMap);
     app.component("Movie", Movie);
-    app.provide("globalStats", stats);
+    app.component("ArticleGPT", ArticleGPT);
+    app.component("SakuraManager", SakuraManager);
+    app.component("Poem", Poem);
 
     app.component("CustomHome", CustomHome);
     app.component("VPPosts", VPPosts);
     app.component("RepoCard", RepoCard);
+
+    app.provide("globalStats", stats);
   },
   setup() {
     // setup 在 client 端也会执行，但我们可以利用 import.meta.env.SSR
@@ -84,31 +93,8 @@ export default defineClientConfig({
         console.error("PV Fetch Error:", e);
       }
     };
-    // 页面首次加载
+
     onMounted(() => {
-      // 动态加载 anime.js
-      // const script = document.createElement('script');
-      // script.src = 'https://cdn.jsdelivr.net/npm/animejs@2.2.0/anime.min.js';
-      // script.onload = () => {
-      //   // anime.js 加载完成后，插入 canvas 元素
-      //   const canvas = document.createElement('canvas');
-      //   canvas.className = 'fireworks';
-      //   canvas.style.position = 'fixed';
-      //   canvas.style.left = '0px';
-      //   canvas.style.top = '0px';
-      //   canvas.style.zIndex = '99999999';
-      //   canvas.style.pointerEvents = 'none';
-      //   canvas.style.width = '848px';
-      //   canvas.style.height = '799px';
-      //   canvas.width = 1696;
-      //   canvas.height = 1598;
-      //   document.body.appendChild(canvas);
-
-      //   // 调用 clickEffect3 函数
-      //   clickEffect3();
-      // };
-      // document.head.appendChild(script);
-
       trackAndFetchPV(route.path, route.fullPath);
     });
 

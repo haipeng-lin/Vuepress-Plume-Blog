@@ -5,14 +5,17 @@ permalink: /blog/kc6kst6a/
 
 cover: https://img.haipeng-lin.cn/20260101072938.png
 coverStyle:
-    layout: left
-    ratio: '16:9'
-    width: 300
-excerpt: '此篇记录了SpringBoot集成MQTT的实现过程'
+  layout: left
+  ratio: "16:9"
+  width: 300
+excerpt: "此篇记录了SpringBoot集成MQTT的实现过程"
 tags:
-    - SpringBoot
-    - MQTT
+  - SpringBoot
+  - MQTT
+show: true
+articleGPT: 这篇文章讲了 SpringBoot 集成 MQTT 协议的实战方案。作者记录了从引入 Maven 依赖、配置 YML 参数到编写核心 Java 类的全过程。文中详细展示了配置类、连接管理、消息发布与订阅逻辑的实现，并提供了处理消息到达与连接丢失的回调类代码，为开发者构建物联网通讯系统提供了清晰的代码参考。
 ---
+
 ## 环境配置
 
 ### Docker
@@ -87,7 +90,7 @@ public class MqttConfig {
 
 ### MqttConnection
 
-作用：调用连接MQTT方法
+作用：调用连接 MQTT 方法
 
 ```java
 @Slf4j
@@ -120,7 +123,7 @@ public class MqttConnection {
 @Slf4j
 @Component
 public class MqttClient {
-    
+
     @Autowired
     private MqttConfig mqttConfig;
 
@@ -167,7 +170,7 @@ public class MqttClient {
         this.client.subscribe(mqttConfig.getClientUnsubscribedTopic(), 0);
         this.client.subscribe(mqttConfig.getDeviceTimeReqTopic(), 0);
     }
-    
+
 
     /**
      * 发送消息
@@ -247,8 +250,3 @@ public class MqttMsgCallBack implements MqttCallback {
     }
 }
 ```
-
-
-
-
-

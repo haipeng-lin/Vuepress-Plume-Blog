@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-      <el-tab-pane class="music-container" label="2024年歌单" name="first" >
+      <el-tab-pane class="music-container" label="2024年歌单" name="first">
         <div id="aplayer2024" style="width: 60%"></div>
       </el-tab-pane>
       <el-tab-pane class="music-container" label="2023年歌单" name="second">
@@ -22,8 +22,7 @@
 import { ref, onMounted } from "vue";
 import "aplayer/dist/APlayer.min.css";
 
-const activeName = ref("first"); // 用来存储当前选中的标签
-
+const activeName = ref("first");
 const audio2024 = ref([
   {
     name: "达尔文",
