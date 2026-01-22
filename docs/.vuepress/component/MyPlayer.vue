@@ -251,20 +251,6 @@ const audio2021 = ref([
     cover: "https://imge.kugou.com/stdmusic/20250125/20250125121713244765.jpg",
     lrc: "/lrc/讲不出再见.lrc",
   },
-  //   {
-  //     name: "只要你在我身边",
-  //     artist: "鹤先生Music",
-  //     url: "/music/只要你在我身边.mp3",
-  //     cover: "",
-  //     lrc: "/lrc/只要你在我身边.lrc",
-  //   },
-  //   {
-  //     name: "青衣",
-  //     artist: "九鸢Pro/在下河帛",
-  //     url: "/music/青衣.mp3",
-  //     cover: "",
-  //     lrc: "/lrc/青衣.lrc",
-  //   },
   {
     name: "时光背面的我",
     artist: "刘至佳/韩瞳",
