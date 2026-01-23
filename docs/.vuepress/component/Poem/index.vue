@@ -59,14 +59,12 @@ const poems = [
     text-align: center;
     font-size: 1.3rem;
     font-weight: 500;
-    /* color: var(--vp-c-text-1); */
     margin-bottom: 0.5rem !important;
 }
 
 .poem-author {
     text-align: right;
     font-size: 1rem;
-    /* color: var(--vp-c-text-2); */
     margin: 0 !important;
     padding-right: 8%;
 }

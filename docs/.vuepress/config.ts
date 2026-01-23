@@ -51,7 +51,6 @@ export default defineUserConfig({
       { type: "text/javascript", src: "https://webapi.amap.com/loader.js" },
     ],
     // 背景：樱花特效
-    // [ 'script', { type: 'text/javascript', src: '/js/background.js' } ],
     // ['meta', { referrer: 'no-referrer' }]
   ],
 
@@ -59,7 +58,7 @@ export default defineUserConfig({
     // 白天&黑夜模式
     appearance: false,
 
-    // hostname: 'https://blog.haipeng-lin.cn',
+    hostname: "https://haipeng-lin.cn",
 
     profile: {
       avatar: "/images/avatar.jpg",
@@ -104,7 +103,7 @@ export default defineUserConfig({
     footer: {
       message:
         '欢迎光临小破站！<a href="https://beian.miit.gov.cn/#/Integrated/index" style="text-decoration:none">粤ICP备2025360098号-1</a>',
-      copyright: "© Copyright 2024-2025 All Rights Reserved. 版权所有：𝙆𝙞𝙖𝙣𝙜",
+      copyright: "© Copyright 2024-2026 All Rights Reserved. 版权所有：𝙁𝙡𝙖𝙨𝙝",
     },
 
     // logo
@@ -117,8 +116,24 @@ export default defineUserConfig({
     outline: [1, 4],
 
     social: [
-      { icon: "github", link: "https://github.com/vuepress-theme-plume" },
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m-1.852 4.444a3.704 3.704 0 0 0-3.704 3.704v6.913c0 .273.222.495.494.495h7.285a3.334 3.334 0 0 0 3.333-3.333v-2.84a.494.494 0 0 0-.495-.494h-5.678a.495.495 0 0 0-.494.494v1.234c0 .273.22.494.493.494h3.458c.272 0 .493.221.493.493v.248a1.48 1.48 0 0 1-1.481 1.481H9.16a.494.494 0 0 1-.494-.493v-4.692c0-.818.663-1.48 1.482-1.481h6.913a.495.495 0 0 0 .494-.494V6.938a.493.493 0 0 0-.494-.494z"/></svg>',
+          name: "gitee",
+        },
+        link: "https://gitee.com/linhaipengg",
+      },
+
+      {
+        icon: {
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="currentColor" d="M0 3.121V15h16V3.121l-8 8z"/><path fill="currentColor" d="M16 1H0l8 8z"/></svg>',
+          name: "email",
+        },
+        link: "mailto:hi@haipeng_lin@163.com",
+      },
     ],
+    navbarSocialInclude: ["gitee", "email"],
+
     // 文章显示
     autoFrontmatter: {
       permalink: true, // 是否生成永久链接

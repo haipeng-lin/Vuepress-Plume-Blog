@@ -612,7 +612,7 @@ config:
 
 新增组件：
 
-```vue title="/docs/.vuepress/component/ArticleGPT.vue"
+```vue title="/docs/.vuepress/component/ArticleGPT/index.vue"
 <template>
   <div v-if="frontmatter.articleGPT" class="article-summary">
     <div class="summary-container">
@@ -986,7 +986,7 @@ onBeforeUnmount(() => {
 
 ```ts title="/docs/.vuepress/client.ts"
 import { defineClientConfig } from 'vuepress/client'
-import ArticleGPT from "./component/ArticleGPT.vue";	// [!code ++]
+import ArticleGPT from "./component/ArticleGPT/index.vue";	// [!code ++]
 
 export default defineClientConfig({
 
@@ -1031,28 +1031,1125 @@ articleGPT: 该文章讲了从 Windows 阵营切换到 MacBook 后的系统“�
 
 ## 足迹
 
-效果图
+效果图：
 
-![image-20260101081440762](https://img.haipeng-lin.cn/20260101081440.png)
+![image-20260123113201964](https://img.haipeng-lin.cn/1769139122178.png)
 
 参考文档
 
 - [高德地图 JS API 2.0 文档](https://lbs.amap.com/api/javascript-api-v2/summary)
 - [高德地图 JS API 2.0 示例](https://lbs.amap.com/demo/javascript-api-v2/example/map-lifecycle/map-show)
 
-自定义组件
+新增组件：
 
-待写：
+```vue title="/docs/.vuepress/component/FootMap/index.vue"
+<template>
+  <div id="mapContainer"></div>
+</template>
+
+<script setup>
+import { ref, onMounted, nextTick } from "vue";
+
+// 状态：用于跟踪地图是否加载完成
+const isMapLoaded = ref(false);
+
+/**
+ * 动态加载高德地图 JS API Loader
+ */
+const loadAMap = async () => {
+  // 确保 AMapLoader 只在客户端被导入
+  const AMapLoader = await import("@amap/amap-jsapi-loader");
+
+  // AMapLoader.load 会返回一个 Promise
+  await AMapLoader.load({
+    key: "04fc0ff41d59b411e57496afb25fea89",
+    version: "2.0",
+    plugins: ["AMap.ToolBar", "AMap.Scale"], // 添加常用插件
+  });
+};
+
+/**
+ * 初始化高德地图
+ */
+const initMap = () => {
+  var cityList = [
+    {
+      adcode: "441800",
+      name: "清远",
+      position: [113.0505994, 23.6832984],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 清远市</h3><i>📅 2023（七天的三下乡旅程）</i><p style='line-height:8px'></p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251206212719.png'/></div></div>",
+    },
+    {
+      adcode: "440600",
+      name: "佛山",
+      position: [113.122717, 23.028762],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 佛山市</h3><i>📅 2023（祖庙）</i><p style='line-height:8px'></p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251206213302.png'/><img width='150' src='https://img.haipeng-lin.cn/20251206213246.png'/></div></div>",
+    },
+    {
+      adcode: "440100",
+      name: "广州",
+      position: [113.2592945, 23.1301964],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 广州市</h3><i>📅 2021-2025 (读书&打工)</i><p style='line-height:8px'>第二家乡，大学生活和打工历程</p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251206212054.png'/><img width='150' src='https://img.haipeng-lin.cn/20251206212114.png'/></div></div>",
+    },
+    {
+      adcode: "360100",
+      name: "南昌",
+      position: [115.8540042, 28.687547],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 南昌市</h3><i>📅 2025（游玩）</i><p style='line-height:8px'>超级好吃😋的南昌拌粉、好看的滕王阁等等</p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251016000222.png'/><img width='150' src='https://img.haipeng-lin.cn/20251016000206.png'/></div></div>",
+    },
+    {
+      adcode: "440300",
+      name: "深圳",
+      position: [114.0545429, 22.5445741],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 深圳市</h3><i>📅 2025（实习）</i><p style='line-height:8px'>印象：物价死贵、房东坑人</p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251002162126.png'/></div></div>",
+    },
+    {
+      adcode: "360300",
+      name: "萍乡",
+      position: [113.8830806, 27.6603206],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 萍乡市</h3><i>📅 2025（武功山）</i><p style='line-height:8px'>第一次爬1500的小山峰</p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251123220552.png'/><img width='150' src='https://img.haipeng-lin.cn/20251123220722.png'/></div></div>",
+    },
+    {
+      adcode: "440400",
+      name: "珠海",
+      position: [113.5721327, 22.273734],
+      iconUrl: "",
+      size: [30, 30],
+      desc: "<div><h3 style='margin:10px'>📍 珠海市</h3><i>📅 2025（实习）</i><p style='line-height:8px'>很宜居、适合旅游的城市</p><div style='display: flex; gap: 5px;'><img width='150' src='https://img.haipeng-lin.cn/20251127000651.png'/><img width='150' src='https://img.haipeng-lin.cn/20251127000655.png'/></div></div>",
+    },
+  ];
+
+  let adCode = [];
+  for (var i = 0; i < cityList.length; i++) {
+    adCode.push(cityList[i].adcode)
+  }
+
+  const mapContainer = document.getElementById("mapContainer");
+  // 检查地图容器和全局 AMap 对象
+  if (!mapContainer || typeof AMap === "undefined") {
+    console.error("Map container not found or AMap not loaded");
+    return;
+  }
+
+  try {
+    // 总地图初始化
+    const mapInstance = new AMap.Map("mapContainer", {
+      viewMode: "3D",
+      zoom: 6.5,
+      center: [113.8830806, 23.6603206],
+      pitch: 40,
+      defaultCursor: "pointer",
+      features: ["bg", "road", "building", "area", "sky"],
+    });
+    mapInstance.setMapStyle("amap://styles/whitesmoke");
+
+    // 填充省份颜色 
+    const disProvince = new AMap.DistrictLayer.Province({
+      zIndex: 12,
+      zooms: [2, 15],
+      adcode: adCode,
+      depth: 2,
+      styles: {
+        fill: "rgba(100,149,237,0.3)",
+        "province-stroke": "blue",
+        "city-stroke": "cornflowerblue",
+        "county-stroke": "rgba(100,149,237,0.2)",
+      },
+    });
+    mapInstance.add(disProvince);
+
+    // 创建 Label 图层用于容纳所有 LabelMarker
+    var labelsLayer = new AMap.LabelsLayer({
+      collision: false,
+      animation: true,
+      zIndex: 15,
+    });
+
+    // 循环创建和添加 Marker
+    for (var i = 0; i < cityList.length; i++) {
+      var city = cityList[i];
+
+      // 创建 LabelMarker (用于图标和文字标签)
+      var labelsMarker = new AMap.LabelMarker({
+        position: city.position,
+        name: city.name,
+        zooms: [4, 13],
+        zIndex: 1,
+        opacity: 1,
+        icon: {
+          image: city.iconUrl,
+          size: new AMap.Size(city.size[0], city.size[1]),
+          imageSize: new AMap.Size(city.size[0], city.size[1]),
+          anchor: "center",
+        },
+        text: {
+          content: city.name,
+          direction: "bottom",
+          offset: [0, 5],
+          style: {
+            fontSize: 12,
+            fontWeight: "normal",
+            fillColor: "#eee",
+            strokeColor: "#88f",
+            strokeWidth: 3,
+            // cursor: pointer,
+          },
+        },
+      });
+
+      // 创建信息窗体
+      const infoWindow = new AMap.InfoWindow({
+        content: city.desc,
+        anchor: "bottom-center",
+        offset: new AMap.Pixel(0, -15),
+      });
+
+      // 绑定点击事件
+      labelsMarker.on("click", function (e) {
+        console.log(`点击了 ${city.name} 标记`);
+        // 打开信息窗体，位置为当前点击的 Marker 的位置
+        infoWindow.open(mapInstance, e.target.getPosition());
+      });
+
+      // 将 Marker 添加到 LabelsLayer
+      labelsLayer.add(labelsMarker);
+    }
+
+    // 将 LabelsLayer 添加到地图
+    mapInstance.add(labelsLayer);
+
+    // 隐藏高德地图 Logo 和版权信息
+    const logoElement = document.getElementsByClassName("amap-logo")[0];
+    const copyrightElement =
+      document.getElementsByClassName("amap-copyright")[0];
+    if (logoElement) logoElement.innerHTML = "";
+    if (copyrightElement) copyrightElement.innerHTML = "";
+  } catch (error) {
+    console.error("地图初始化失败:", error);
+  }
+};
+
+// VUE 3 生命周期钩子：组件挂载后执行
+onMounted(async () => {
+  try {
+    await loadAMap();
+    // 等待 DOM 更新（虽然对于 #mapContainer 已经存在的情况可能不是严格必要，但保持严谨性）
+    await nextTick();
+    initMap();
+    isMapLoaded.value = true;
+  } catch (error) {
+    console.error("地图加载失败:", error);
+  }
+});
+</script>
+
+<style>
+#mapContainer {
+  height: 1000px;
+}
+</style>
+```
+
+注册组件：
+
+```ts title="/docs/.vuepress/client.ts"
+import { defineClientConfig } from 'vuepress/client'
+import FootMap from "./component/FootMap/index.vue";	// [!code ++]
+
+export default defineClientConfig({
+
+    enhance({ app, router, siteData }) {
+        app.component('FootMap', FootMap)	// [!code ++]
+    }
+}
+```
+
+使用组件：
+
+```md
+---
+title: 足迹
+permalink: /memory/foot/
+comment: false
+aside: false
+copyright: false
+createTime: 2025/01/16 12:47:43
+---
+
+<FootMap></FootMap>
+```
+
+
 
 ## 藏宝阁
 
+由于现在的 Vuepress 主题市面上使用的人数较 Hexo 主题少，找不到实现心心念念的藏宝阁教程，故逐步探索着实现过程：如何在 Vuepress 主题注册 Vue 组件？页面结构   样式设计？如何使用 Vue 组件。
+
 效果图：
 
-![image-20251222235925205](https://img.haipeng-lin.cn/20251223000030.png)
+![image-20260123112928497](https://img.haipeng-lin.cn/1769138970037.png)
 
-实现记录：[【Vuepress】藏宝阁](https://haipeng-lin.cn/blog/u5gmpjmf/)
+实现过程：
 
-## 百度统计-浏览量
+自定义组件：
+
+```vue title="/docs/.vuepress/component/Movie/index.vue"
+<template>
+  <div class="movie-collection-container">
+    <div class="header">
+      <h2>🎬 电影</h2>
+      <p class="subtitle">
+        喜欢港片、悬疑片、恐怖片（越菜越爱玩）. 共收藏
+        {{ movieList.length }} 部影片
+      </p>
+    </div>
+    <div class="movie-grid">
+      <div v-for="movie in movieList" :key="movie.id" class="movie-grid-item">
+        <div class="poster-wrapper">
+          <!-- 图片 -->
+          <img :src="movie.poster" :alt="movie.title" loading="lazy" />
+          <!-- 状态 -->
+          <span class="status-badge">{{ movie.status }}</span>
+          <div class="movie-overlay-info">
+            <!-- 标题 -->
+            <h3 class="movie-title">{{ movie.title }}</h3>
+            <div class="meta-row">
+              <div class="rating-stars">
+                <!-- 星星 -->
+                <span
+                  v-for="(type, index) in getStars(movie.score)"
+                  :key="index"
+                  class="star-icon"
+                  :class="type"
+                  >★</span
+                >
+                <!-- 评分 -->
+                <span class="score-num">{{ movie.score }}</span>
+              </div>
+            </div>
+            <!-- 日期 -->
+            <span class="watch-date">{{ movie.date }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref } from "vue";
+
+// 电影列表
+const movieList = ref([
+  {
+    title: "爱·作战",
+    poster: "",
+    score: 5,
+    date: "2025-07",
+    status: "已看",
+  },
+  {
+    title: "的士判官",
+    poster: "",
+    score: 4,
+    date: "2025-07",
+    status: "已看",
+  },
+  {
+    title: "龙虎风云",
+    poster: "",
+    score: 4.5,
+    date: "2025-07",
+    status: "已看",
+  },
+  {
+    title: "猎金游戏",
+    poster: "",
+    score: 4,
+    date: "2025-07",
+    status: "已看",
+  },
+  {
+    title: "常在我心",
+    poster: "",
+    score: 5,
+    date: "2025-07",
+    status: "已看",
+  },
+  {
+    title: "铿钱家族",
+    poster: "",
+    score: 5,
+    date: "2025-06",
+    status: "已看",
+  },
+  {
+    title: "每当变幻时",
+    poster: "",
+    score: 5,
+    date: "2025-06",
+    status: "已看",
+  },
+  {
+    title: "神雕侠侣",
+    poster: "",
+    score: 5,
+    date: "2025-06",
+    status: "已看",
+  },
+  {
+    title: "冲锋陷阵",
+    poster: "",
+    score: 5,
+    date: "2025-06",
+    status: "已看",
+  },
+  {
+    title: "使徒行者",
+    poster: "",
+    score: 4.5,
+    date: "2025-06",
+    status: "已看",
+  },
+  {
+    title: "卧虎藏龙",
+    poster: "",
+    score: 5,
+    date: "2025-06",
+    status: "已看",
+  },
+  {
+    title: "英雄",
+    poster: "",
+    score: 5,
+    date: "2025-06",
+    status: "已看",
+  },
+]);
+
+/** 获取星星 */
+const getStars = (score) => {
+  const stars = [];
+  const fullStars = Math.floor(score);
+  const hasHalf = score % 1 !== 0;
+  for (let i = 0; i < fullStars; i++) stars.push("full");
+  if (hasHalf) stars.push("half");
+  while (stars.length < 5) stars.push("empty");
+  return stars;
+};
+</script>
+
+<style scoped>
+/** 变量定义 */
+.movie-collection-container {
+  --card-bg: #ffffff;
+  --text-overlay: #fff;
+  /* 遮罩层文字颜色 */
+  --text-overlay-sub: rgba(255, 255, 255, 0.7);
+  /* 遮罩层次要文字颜色 */
+  --primary: #49b1f5;
+  --star-color: #ffc107;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.2);
+  min-height: 100vh;
+}
+
+.header {
+  margin: 0 auto 10px;
+  text-align: center;
+}
+
+.header h2 {
+  margin: 0 0 10px;
+  color: #4c4948;
+}
+
+.subtitle {
+  color: #999;
+  font-size: 0.9rem;
+}
+
+/** 网格布局 */
+.movie-grid {
+  display: grid;
+  /* 核心需求：一行显示6个。使用 minmax 确保最小宽度，避免过分挤压 */
+  grid-template-columns: repeat(6, 1fr);
+  gap: 20px;
+  /* 卡片间距 */
+  max-width: 1400px;
+  /* 增加最大宽度以容纳6列 */
+  margin: 0 auto;
+}
+
+/** 卡片项样式 */
+.movie-grid-item {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  background: var(--card-bg);
+  /* 强制设置宽高比为常见的海报比例 (2:3) */
+  aspect-ratio: 2 / 3;
+  /* 解决 Safari 圆角溢出问题 */
+  transform: translateZ(0);
+}
+
+.movie-grid-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+/* 海报包裹层 */
+.poster-wrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  cursor: pointer;
+}
+
+.poster-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* 确保图片填满且不变形 */
+  transition: transform 0.5s ease;
+}
+
+.movie-grid-item:hover .poster-wrapper img {
+  transform: scale(1.05);
+  /* 轻微放大效果 */
+}
+
+/* --- 右上角状态 --- */
+.status-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  /* 改为右上角 */
+  background: rgba(0, 0, 0, 0.65);
+  color: var(--text-overlay);
+  font-size: 12px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+  z-index: 2;
+  font-weight: 500;
+}
+
+/* --- 左下角信息遮罩层 --- */
+.movie-overlay-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 50px 12px 12px;
+  /* 顶部留出空间给渐变 */
+  box-sizing: border-box;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  /* 关键：底部黑色渐变，保证文字清晰度 */
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.5) 60%,
+    transparent 100%
+  );
+  color: var(--text-overlay);
+}
+
+/* 电影标题 */
+.movie-title {
+  margin: 0 0 6px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  line-height: 1.3;
+  color: #ffffff;
+}
+
+/* 评分行 */
+.meta-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.rating-stars {
+  display: flex;
+  align-items: center;
+}
+
+/* 星星图标调整得更紧凑小巧 */
+.star-icon {
+  font-size: 12px;
+  margin-right: 1px;
+}
+
+.star-icon.full {
+  color: var(--star-color);
+}
+
+.star-icon.half {
+  color: transparent;
+  background: linear-gradient(
+    90deg,
+    var(--star-color) 50%,
+    rgba(255, 255, 255, 0.3) 50%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.star-icon.empty {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.score-num {
+  margin-left: 6px;
+  color: var(--star-color);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* 观看时间 */
+.watch-date {
+  font-size: 0.75rem;
+  color: var(--text-overlay-sub);
+}
+
+/* --- 响应式适配 (重要) --- */
+/* 确保在小屏幕上不会强制6列导致不可看 */
+@media (max-width: 1200px) {
+  .movie-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .movie-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .movie-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .movie-collection-container {
+    padding: 20px 10px;
+  }
+
+  .movie-grid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .movie-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .movie-title {
+    font-size: 0.9rem;
+  }
+}
+</style>
+```
+
+注册组件：
+
+```ts title="/docs/.vuepress/client.ts"
+import { defineClientConfig } from "vuepress/client";
+import Movie from "./component/Movie/index.vue"; // [!code ++]
+
+export default defineClientConfig({
+  enhance({ app, router, siteData }) {
+    app.component("Movie", Movie); // [!code ++]
+  },
+});
+```
+
+使用组件：
+
+```md title="/docs/.vuepress/blog/movie.md"
+---
+title: 藏宝阁
+permalink: /movie/
+createTime: false
+readingTime: false
+---
+
+<Movie></Movie>
+```
+
+## 音乐馆
+
+效果图：
+
+![image-20260123112158320](https://img.haipeng-lin.cn/1769138522467.png)
+
+自定义组件：
+
+```vue title="/docs/.vuepress/component/APlayer/index.vue" 
+<template>
+    <div class="player-wrapper">
+        <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
+            <el-tab-pane v-for="tab in tabConfig" :key="tab.name" :label="tab.label" :name="tab.name">
+                <div class="music-container">
+                    <div :id="tab.id" class="aplayer-instance"></div>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+    </div>
+</template>
+
+<script name="MyPlayer" lang="ts" setup>
+import { ref, onMounted } from "vue";
+import "aplayer/dist/APlayer.min.css";
+import { audio2024, audio2023, audio2022, audio2021 } from "./data";
+
+const activeName = ref("first");
+const players: Record<string, any> = {};
+
+const tabConfig = [
+    { label: "2024年歌单", name: "first", id: "aplayer2024", data: audio2024 },
+    { label: "2023年歌单", name: "second", id: "aplayer2023", data: audio2023 },
+    { label: "2022年歌单", name: "third", id: "aplayer2022", data: audio2022 },
+    { label: "2021年歌单", name: "fourth", id: "aplayer2021", data: audio2021 },
+];
+
+async function addMyAudio() {
+    const { default: APlayer } = await import("aplayer");
+
+    const createPlayer = (id: string, audioData: any, isAutoplay = false) => {
+        const container = document.getElementById(id);
+        if (!container) return null;
+
+        return new APlayer({
+            container: container,
+            audio: audioData,
+            showlrc: true,
+            lrcType: 3,
+            listMaxHeight: 1000,
+            loop: "all",
+            order: "list",
+            autoplay: isAutoplay,
+        });
+    };
+
+    // 根据配置自动初始化所有播放器
+    tabConfig.forEach(tab => {
+        players[tab.name] = createPlayer(tab.id, tab.data, tab.name === "first");
+    });
+}
+
+const handleClick = (pane: any) => {
+    const targetName = pane.paneName;
+    Object.keys(players).forEach((key) => {
+        if (key !== targetName && players[key]) {
+            players[key].pause();
+        }
+    });
+};
+
+onMounted(() => {
+    addMyAudio();
+});
+</script>
+
+<style scoped>
+/* 定义颜色变量 */
+.player-wrapper {
+    --theme-color: rgb(75, 209, 230);
+    --theme-color-dark: rgb(140, 198, 205);
+    padding: 10px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* 1. 取消标签页选中项的下划线（指示条） */
+:deep(.el-tabs__active-bar) {
+    display: none !important;
+}
+
+/* 2. 取消标签页头部的长灰色底线 */
+:deep(.el-tabs__nav-wrap::after) {
+    display: none !important;
+}
+
+/* Tab 居中 */
+:deep(.el-tabs__nav-scroll) {
+    display: flex;
+    justify-content: center;
+}
+
+/* 未选中状态 */
+:deep(.el-tabs__item) {
+    font-size: 1.1rem;
+    color: #999;
+    padding: 0 35px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: "LXGW WenKai GB", sans-serif;
+}
+
+/* 鼠标悬停 */
+:deep(.el-tabs__item:hover) {
+    color: var(--theme-color-dark);
+    transform: translateY(-2px);
+    /* 悬停微动增加反馈感 */
+}
+
+:deep(.el-tabs__item.is-active) {
+    color: var(--theme-color);
+    font-weight: bold;
+    font-size: 1.2rem;
+    text-shadow: 0 4px 10px rgba(170, 218, 225, 0.3);
+}
+
+/* 播放器容器 */
+.music-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+.aplayer-instance {
+    width: 80%;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05),
+        0 8px 25px rgba(170, 218, 225, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(170, 218, 225, 0.2);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* APlayer 字体应用 */
+:deep(.aplayer) {
+    font-family: "LXGW WenKai GB", sans-serif !important;
+}
+
+/* 适配移动端 */
+@media (max-width: 768px) {
+    .aplayer-instance {
+        width: 100%;
+    }
+
+    :deep(.el-tabs__item) {
+        padding: 0 15px;
+        font-size: 0.95rem;
+    }
+
+    :deep(.el-tabs__item.is-active) {
+        font-size: 1.05rem;
+    }
+}
+</style>
+```
+
+新增数据：
+
+```ts title="/docs/.vuepress/component/APlayer/data.ts" 
+// 定义歌曲对象的接口
+export interface Song {
+  name: string;
+  artist: string;
+  url: string;
+  cover: string;
+  lrc: string;
+}
+
+// 2024年歌单
+export const audio2024: Song[] = [
+  {
+    name: "达尔文",
+    artist: "林俊杰",
+    url: "https://mp3.haipeng-lin.cn/达尔文.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250318/20250318151024669070.jpg",
+    lrc: "/lrc/达尔文.lrc",
+  },
+  {
+    name: "东北民谣",
+    artist: "毛不易",
+    url: "https://mp3.haipeng-lin.cn/东北民谣.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20241203/20241203145401178225.jpg",
+    lrc: "/lrc/东北民谣.lrc",
+  },
+  {
+    name: "一笑江湖",
+    artist: "姜姜",
+    url: "https://mp3.haipeng-lin.cn/一笑江湖.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20241108/20241108184906226358.jpg",
+    lrc: "/lrc/一笑江湖.lrc",
+  },
+  {
+    name: "画心",
+    artist: "张信哲/黄霄云",
+    url: "https://mp3.haipeng-lin.cn/画心.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20240503/20240503102101407007.jpg",
+    lrc: "/lrc/画心.lrc",
+  },
+  {
+    name: "安和桥",
+    artist: "宇西",
+    url: "https://mp3.haipeng-lin.cn/安和桥.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250306/20250306202203946460.jpg",
+    lrc: "/lrc/安和桥.lrc",
+  },
+  {
+    name: "一荤一素",
+    artist: "毛不易",
+    url: "https://mp3.haipeng-lin.cn/一荤一素.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20220512/20220512172410555244.jpg",
+    lrc: "/lrc/一荤一素.lrc",
+  },
+  {
+    name: "客子光阴",
+    artist: "七叔-叶泽浩",
+    url: "https://mp3.haipeng-lin.cn/客子光阴.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20201221/20201221210207596344.jpg",
+    lrc: "/lrc/客子光阴.lrc",
+  },
+  {
+    name: "No Footsteps to Follow",
+    artist: "Galen Crew",
+    url: "https://mp3.haipeng-lin.cn/No Footsteps to Follow.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20231022/20231022083302614426.jpg",
+    lrc: "/lrc/No Footsteps to Follow.lrc",
+  },
+  {
+    name: "Traveling Light",
+    artist: "Joel Hanson / Sara Groves",
+    url: "https://mp3.haipeng-lin.cn/Traveling Light.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20240306/20240306005002445169.jpg",
+    lrc: "/lrc/Traveling Light.lrc",
+  },
+];
+
+// 2023年歌单
+export const audio2023: Song[] = [
+  {
+    name: "The Nights",
+    artist: "Alyson Mary",
+    url: "https://mp3.haipeng-lin.cn/客子光阴.mp3",
+    cover:
+      "http://imge.kugou.com/stdmusic/150/20170815/20170815070007812976.jpg",
+    lrc: "/lrc/一荤一素.lrc",
+  },
+  {
+    name: "虹之间",
+    artist: "金贵晟",
+    url: "https://mp3.haipeng-lin.cn/虹之间.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250207/20250207161306660783.jpg",
+    lrc: "/lrc/虹之间.lrc",
+  },
+  {
+    name: "Every Time We Touch",
+    artist: "Dream Tunes",
+    url: "https://mp3.haipeng-lin.cn/Every Time We Touch.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20230907/20230907142702894170.jpg",
+    lrc: "/lrc/Every Time We Touch.lrc",
+  },
+  {
+    name: "曾经的你",
+    artist: "许巍",
+    url: "https://mp3.haipeng-lin.cn/曾经的你.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250221/20250221180747451258.jpg",
+    lrc: "/lrc/曾经的你.lrc",
+  },
+  {
+    name: "喜悦",
+    artist: "许巍",
+    url: "https://mp3.haipeng-lin.cn/喜悦.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250807/20250807142812489671.jpg",
+    lrc: "/lrc/喜悦.lrc",
+  },
+  {
+    name: "Take Me to Your Heart",
+    artist: "InstaHit Crew",
+    url: "https://mp3.haipeng-lin.cn/Take Me to Your Heart.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20211008/20211008195506274271.jpg",
+    lrc: "/lrc/Take Me to Your Heart.lrc",
+  },
+  {
+    name: "星光就在前方",
+    artist: "抠抠",
+    url: "https://mp3.haipeng-lin.cn/星光就在前方.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250318/20250318151133870084.jpg",
+    lrc: "/lrc/星光就在前方.lrc",
+  },
+  {
+    name: "大海",
+    artist: "张雨生",
+    url: "https://mp3.haipeng-lin.cn/大海.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20201125/20201125103505920689.jpg",
+    lrc: "/lrc/大海.lrc",
+  },
+  {
+    name: "救赎之旅",
+    artist: "许巍",
+    url: "https://mp3.haipeng-lin.cn/救赎之旅.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250807/20250807142812489671.jpg",
+    lrc: "/lrc/救赎之旅.lrc",
+  },
+];
+
+// 2022年歌单
+export const audio2022: Song[] = [
+  {
+    name: "我用什么把你留住",
+    artist: "福禄寿",
+    url: "https://mp3.haipeng-lin.cn/我用什么把你留住.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20200918/20200918222902157666.jpg",
+    lrc: "/lrc/我用什么把你留住.lrc",
+  },
+  {
+    name: "Dirty Daws",
+    artist: "Of Monsters And Men",
+    url: "https://mp3.haipeng-lin.cn/Dirty Daws.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20200623/20200623003444649700.jpg",
+    lrc: "/lrc/Dirty Daws.lrc",
+  },
+  {
+    name: "Summertime Sadness",
+    artist: "Lana Del Rey",
+    url: "https://mp3.haipeng-lin.cn/Summertime Sadness.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20241115/20241115095201257667.jpg",
+    lrc: "/lrc/Summertime Sadness.lrc",
+  },
+  {
+    name: "千千阙歌",
+    artist: "陈慧娴",
+    url: "https://mp3.haipeng-lin.cn/千千阙歌.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20241206/20241206175512631404.jpg",
+    lrc: "/lrc/千千阙歌.lrc",
+  },
+  {
+    name: "沉默是金",
+    artist: "张国荣",
+    url: "https://mp3.haipeng-lin.cn/沉默是金.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250311/20250311104914634074.jpg",
+    lrc: "/lrc/沉默是金.lrc",
+  },
+  {
+    name: "Dancing With Your Ghost(Live)",
+    artist: "于文文",
+    url: "https://mp3.haipeng-lin.cn/Dancing With Your Ghost(Live).mp3",
+    cover: "https://imge.kugou.com/stdmusic/20190626/20190626210118627550.jpg",
+    lrc: "/lrc/Dancing With Your Ghost(Live).lrc",
+  },
+  {
+    name: "平凡之路(Live)",
+    artist: "朴树",
+    url: "https://mp3.haipeng-lin.cn/平凡之路(Live).mp3",
+    cover: "https://imge.kugou.com/stdmusic/20200620/20200620071827410208.jpg",
+    lrc: "/lrc/平凡之路(Live).lrc",
+  },
+];
+
+// 2021年歌单
+export const audio2021: Song[] = [
+  {
+    name: "海底",
+    artist: "一支榴莲",
+    url: "https://mp3.haipeng-lin.cn/海底.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20200316/20200316175845625083.jpg",
+    lrc: "/lrc/海底.lrc",
+  },
+  {
+    name: "城南花已开",
+    artist: "三亩地",
+    url: "https://mp3.haipeng-lin.cn/城南花已开.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20181102/20181102115543498345.jpg",
+    lrc: "/lrc/城南花已开.lrc",
+  },
+  {
+    name: "错位时空",
+    artist: "艾辰",
+    url: "https://mp3.haipeng-lin.cn/错位时空.mp3",
+    cover: "",
+    lrc: "/lrc/错位时空.lrc",
+  },
+  {
+    name: "讲不出再见",
+    artist: "谭咏麟",
+    url: "https://mp3.haipeng-lin.cn/讲不出再见.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250125/20250125121713244765.jpg",
+    lrc: "/lrc/讲不出再见.lrc",
+  },
+  {
+    name: "时光背面的我",
+    artist: "刘至佳/韩瞳",
+    url: "https://mp3.haipeng-lin.cn/时光背面的我.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20210702/20210702141406996785.jpg",
+    lrc: "/lrc/时光背面的我.lrc",
+  },
+  {
+    name: "忘记时间",
+    artist: "胡歌",
+    url: "https://mp3.haipeng-lin.cn/忘记时间.mp3",
+    cover: "https://imge.kugou.com/stdmusic/20250221/20250221180731140818.jpg",
+    lrc: "/lrc/忘记时间.lrc",
+  },
+];
+```
+
+注册组件：
+
+```ts title="/docs/.vuepress/client.ts
+import { defineClientConfig } from 'vuepress/client'
+import APlayer from "./component/APlayer/index.vue";	// [!code ++]
+
+export default defineClientConfig({
+
+    enhance({ app, router, siteData }) {
+        app.component('APlayer', APlayer)	// [!code ++]
+    }
+}
+```
+
+使用组件：
+
+```md
+---
+title: 足迹
+permalink: /memory/foot/
+comment: false
+aside: false
+copyright: false
+createTime: 2025/01/16 12:47:43
+---
+
+<FootMap></FootMap>
+```
+
+## 百度统计 | 浏览量
 
 效果图：
 

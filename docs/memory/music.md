@@ -7,4 +7,4 @@ copyright: false
 comment: false
 ---
 
-<MyPlayer></MyPlayer>
+<APlayer></APlayer>

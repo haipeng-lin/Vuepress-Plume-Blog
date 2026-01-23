@@ -1,5 +1,5 @@
 ---
-title: 鼠标点击爆炸粒子烟花特效
+title: Vuepress | 爆炸粒子烟花
 createTime: 2025/02/11 11:43:39
 permalink: /blog/dhg6719f/
 cover: https://img.haipeng-lin.cn/20251002000400.png
@@ -15,7 +15,7 @@ show: true
 articleGPT: 本文分享了纯 JS 与引入 anime.js 库两种方案，深入探讨了脚本加载时机对渲染的影响，特别强调自定义脚本应置于 body 标签内以确保资源就绪。同时针对 VuePress Plume 主题，提供了在 client.js 中动态创建 Canvas 并挂载组件的完整逻辑，帮助开发者避开部署后特效失效的坑，让绚烂的粒子效果在指尖完美绽放。
 ---
 
-## 1.前言
+## 前言
 
 &emsp;&emsp;一直想给自己的博客加个点击鼠标特效的（没遇到心仪的—\_—），昨天遇到一个特别好看的爆炸粒子烟花特效（虽然看久了有点花里胡哨的，但是目前站点先保留叭）。昨天捣鼓了半天，本地测试效果可以，部署到阿里云就不行了。今天查出原因：自定义 js 脚本不能放在 head 标签里，得放在 body 标签，自定义 js 脚本需要等待网页资源加载完毕才可以执行！
 
@@ -23,7 +23,7 @@ articleGPT: 本文分享了纯 JS 与引入 anime.js 库两种方案，深入探
 
 <img src="https://img.haipeng-lin.cn/20251002000336.gif" alt="特效" style="zoom:67%;" />
 
-## 2.纯 JS
+## 纯 JS
 
 将下面代码添加到 custom.js 自定义脚本文件中，并==将该脚本插入到 body 标签中==
 
@@ -190,19 +190,19 @@ export function clickEffect() {
 }
 ```
 
-## 3.anime 脚本+绘制脚本
+## anime 脚本+绘制脚本
 
 如果自定义 html 页面，则按照下面三个步骤，并将第三步的自定义绘制脚本引入到 body 标签中，如图，需要注意的是，需要保证 canvas 标签在两个脚本前面，否则效果显示不出来！
 
 ![image-20250211152618036](https://gcore.jsdelivr.net/gh/haipeng-lin/blog-img/20250912000540.png)
 
-### 3.1 绘制代码插入元素
+### 绘制代码插入元素
 
 ```
 <canvas class="fireworks" style="position:fixed;left:0;top:0;z-index:99999999;pointer-events:none;"></canvas>
 ```
 
-### 3.2 引用 anime 外部脚本
+### 引用 anime 外部脚本
 
 ```html
 <script
@@ -211,7 +211,7 @@ export function clickEffect() {
 ></script>
 ```
 
-### 3.3 自定义绘制脚本
+### 自定义绘制脚本
 
 ```js
 export function clickEffect3() {
@@ -371,11 +371,11 @@ export function clickEffect3() {
 }
 ```
 
-## 4.vuepress 内嵌自定义 js 脚本
+## vuepress 内嵌自定义 js 脚本
 
 vuepress 内嵌自定义 js 脚本的两种方式：head、body
 
-### 4.1 head 标签
+### head 标签
 
 > docs > .vuepress > config.js 文件
 >
@@ -399,7 +399,7 @@ export default defineUserConfig({
 });
 ```
 
-### 4.2 body 标签
+### body 标签
 
 > 参考：本站使用的 vuepress 主题为 plume ，在 docs > .vuepress > client.js 文件实现引入自定义脚本
 >
@@ -449,7 +449,7 @@ export default defineClientConfig({
 });
 ```
 
-## 5.参考链接
+## 参考链接
 
 <a target="_blank" rel="noreferrer" href="https://www.bhshare.cn/article/664">薄荷分享：**JS 鼠标点击页面爆炸粒子烟花动画特效源码**</a>
 

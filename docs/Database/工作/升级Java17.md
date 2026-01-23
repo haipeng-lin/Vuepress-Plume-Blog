@@ -1,17 +1,12 @@
 ---
 title: Java8升级为Java17
 createTime: 2025/09/25 22:17:17
-cover:
-  url: https://img.haipeng-lin.cn/20251002165124.png
-  layout: left
-  ratio: '16:9'
-  width: 300
-excerpt: 本篇记录了工作中一个项目需求，从 Jdk8 升级到 Jdk17 的项目依赖变化
 tags:
   - Java
   - 版本升级
 permalink: /blog/uj1uolv8/
 ---
+
 ## 1.版本升级
 
 本篇记录了工作中一个项目需求，从 Jdk8 升级到 Jdk17 的项目依赖变化
@@ -224,7 +219,7 @@ import com.alibaba.druid.spring.boot3.autoconfigure.properties.DruidStatProperti
 
 ### 3.4 @PathVariable
 
-- 换成 SpringBoot 高版本后，@PathVariable 需要指定参数名称，批量替换：@PathVariable\s+(\w+)\s+(\w+)  =>  @PathVariable("$2") $1 $2
+- 换成 SpringBoot 高版本后，@PathVariable 需要指定参数名称，批量替换：@PathVariable\s+(\w+)\s+(\w+) => @PathVariable("$2") $1 $2
 
 - 注意，上述替换只能替换 非数组类型 的字段，数组类型的字段只能手动替换（ sad T_T ）
 

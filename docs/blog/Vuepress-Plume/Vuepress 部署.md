@@ -1,5 +1,5 @@
 ---
-title: vuepress部署到阿里云服务器
+title: Vuepress | 部署
 createTime: 2025/01/24 16:34:27
 permalink: /blog/jmh3sdmp/
 cover: https://img.haipeng-lin.cn/20251002162603.png
@@ -14,11 +14,11 @@ show: true
 articleGPT: 这篇文章讲了将 VuePress 部署到阿里云服务器的流程。作者记录了 SSH 免密配置、Git 钩子自动同步及本地部署脚本的实现细节。通过在服务器建立裸仓库并配合 Git Hook，实现了代码从本地构建到线上目录自动更新的自动化闭环，显著提升了博客的运维与发布效率。
 ---
 
-## 1.前置条件
+## 前置条件
 
 购买阿里云服务器和域名、域名备案（没备案，可使用公网 ip 访问）、服务器安装宝塔面板和 Nginx
 
-## 2.本地生成 ssh 公钥
+## 本地生成 ssh 公钥
 
 cmd 管理员模式输入以下命令后，连续敲回车三次，到路径：C:\Users(用户)\你的用户名.ssh\id_rsa.pub，用 txt 文件打开并复制里面的内容，后续用于和线上服务器建立连接
 
@@ -28,9 +28,9 @@ ssh-keygen -t rsa
 
 ![image-20241229212127747](https://img.haipeng-lin.cn/20251002162626.png)
 
-## 3.阿里云服务器配置
+## 阿里云服务器配置
 
-### 3.1 新增网站
+### 新增网站
 
 ![image-20241229212450167](https://img.haipeng-lin.cn/20251002162637.png)
 
@@ -45,7 +45,7 @@ ssh-keygen -t rsa
 
 ![image-20241229212652201](https://img.haipeng-lin.cn/20251002162649.png)
 
-### 3.2 安装 Git
+### 安装 Git
 
 > root 身份下操作：
 
@@ -97,7 +97,7 @@ echo 'export PATH=$PATH:/usr/local/git/bin' >> /etc/bashrc
 source /etc/bashrc
 ```
 
-### 3.3 配置用户 git
+### 配置用户 git
 
 **创建 git 账户**
 
@@ -121,7 +121,7 @@ git	ALL=(ALL)	ALL
 
 ![image-20241229214105859](https://img.haipeng-lin.cn/20251002162655.png)
 
-### 3.4 建立 shh 连接
+### 建立 shh 连接
 
 切换到 git 用户，并且创建~/.ssh 文件和~/.ssh/authorized_keys 文件
 
@@ -146,7 +146,7 @@ chmod 700 /home/git/.ssh
 ssh -v git@你的服务器IP地址
 ```
 
-### 3.5 仓库目录和网站目录
+### 仓库目录和网站目录
 
 > 先切换为 root 用户
 
@@ -168,7 +168,7 @@ ssh -v git@你的服务器IP地址
    chmod -R 755 /var/www/vuepress
    ```
 
-### 3.6 新建空仓库
+### 新建空仓库
 
 1. **创建一个裸的 git 仓库**
 
@@ -196,7 +196,7 @@ ssh -v git@你的服务器IP地址
    chmod +x /var/repo/vuepress.git/hooks/post-receive
    ```
 
-## 4.本地脚本
+## 本地脚本
 
 将该脚本文件放置在 vuepress 根目录下。注意：**仓库的 master 适用于 git 旧版本**，git 新版本需要更换为 main 默认分支，否则会出现服务器网站根目录数据同步不了的情况（**此为本人亲自踩坑**）
 
@@ -216,9 +216,9 @@ cd -
 sleep 100000
 ```
 
-## 5.测试
+## 测试
 
-### 5.1 执行脚本命令
+### 执行脚本命令
 
 <img src="https://img.haipeng-lin.cn/20251002162717.png" style="zoom:50%;" />
 
@@ -226,7 +226,7 @@ sleep 100000
 
 <img src="https://cdn.jsdelivr.net/gh/haipeng-lin/blog-img/202503201824790.png" style="zoom:50%;" />
 
-### 5.2 观察网站并测速
+### 观察网站并测速
 
 ![image-20250124155245249](https://img.haipeng-lin.cn/20251002162740.png)
 
