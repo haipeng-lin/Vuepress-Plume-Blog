@@ -1,6 +1,6 @@
 ---
 title: 藏宝阁
-permalink: /movie/
+permalink: /memory/movie/
 aside: false
 copyright: false
 comment: false

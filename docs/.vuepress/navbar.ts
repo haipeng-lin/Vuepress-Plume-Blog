@@ -4,7 +4,7 @@ export default defineNavbarConfig([
   { text: "首页", link: "/", icon: "material-symbols:home" },
   { text: "博客", link: "/blog/archives/", icon: "material-symbols:article" },
   {
-    text: "学习",
+    text: "笔记",
     icon: "mdi:learn-outline",
     items: [
       { text: "AI应用", link: "/AI/", icon: "ri:ai" },
@@ -25,21 +25,26 @@ export default defineNavbarConfig([
         link: "/computer-basics/",
         icon: "ic:outline-computer",
       },
+      { text: "备忘录", link: "/memorandum/Git/", icon: "circum:memo-pad" },
     ],
   },
   {
-    text: "记录",
+    text: "碎碎念",
     icon: "material-symbols:camera-rounded",
     items: [
-      { text: "诗词", link: "/poem/", icon: "icon-park-solid:like" },
-      { text: "足迹", link: "/foot/", icon: "material-symbols:barefoot" },
+      { text: "音乐馆", link: "/memory/music/", icon: "mdi:music" },
+      { text: "诗词", link: "/memory/poem/", icon: "icon-park-solid:like" },
+      {
+        text: "足迹",
+        link: "/memory/foot/",
+        icon: "material-symbols:barefoot",
+      },
       {
         text: "藏宝阁",
-        link: "/movie/",
+        link: "/memory/movie/",
         icon: "material-symbols:movie-info-rounded",
       },
-      { text: "备忘录", link: "/memorandum/Git/", icon: "circum:memo-pad" },
-      { text: "网址导航", link: "/site-collect/", icon: "ion:navigate" },
+      { text: "网址导航", link: "/memory/site-collect/", icon: "ion:navigate" },
     ],
   },
   {
