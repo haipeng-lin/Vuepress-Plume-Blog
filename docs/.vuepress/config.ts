@@ -77,13 +77,15 @@ export default defineUserConfig({
     plugins: {
       comment: {
         // 服务提供商
-        provider: "Giscus", // "Artalk" | "Giscus" | "Twikoo" | "Waline"
+        provider: "Twikoo", // "Artalk" | "Giscus" | "Twikoo" | "Waline"
         // 是否默认启用评论
         comment: true,
-        repo: "haipeng-lin/giscus-comment",
-        repoId: "R_kgDOOzuxJA",
-        category: "Announcements",
-        categoryId: "DIC_kwDOOzuxJM4Cq2lP",
+        // repo: "haipeng-lin/giscus-comment",
+        // repoId: "R_kgDOOzuxJA",
+        // category: "Announcements",
+        // categoryId: "DIC_kwDOOzuxJM4Cq2lP",
+        envId: "https://twikoo.haipeng-lin.cn",
+        region: "ap-guangzhou",
       },
       // 贡献者1
       // git: true,
