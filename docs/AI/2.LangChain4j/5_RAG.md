@@ -20,6 +20,28 @@ RAG 的三个核心过程：
 - 检索
 - 生成
 
+## 简要概念
+
+**核心概念**：
+
+- Document：文档。LangChain4j 世界中的知识载体
+- Metadata：元数据。标记文档上下文信息
+- TextSegment：文本片段。当一个文档被拆分成多个部分后，每一段就是一个 TextSegment
+- Embedding：嵌入向量。将文字转化为“数字世界的理解形式”
+
+**文档处理组件**：
+
+- Document Loader：文档加载器。从各类来源中读取原始内容
+- Document Parser：文档解析器。从含有表格、HTML 标签的富文本中提取可用的纯文本
+- Document Transformer：文档转换器。可选，对文档内容进行加工，比如摘要、去重、敏感词处理
+- Document Splitter：文档拆分器。支持按段落、按句子、按字符智能拆分
+
+**嵌入处理组件**：
+
+- Embedding Model：嵌入模型。将高维数据（如文本、图像或其他类型的对象）转换为低维的向量表示
+- Embedding Store：嵌入存储。存储和管理嵌入向量，相似度查询，元数据过滤
+- Embedding Store Ingestor：嵌入存储摄取器。=== 嵌入模型 + 拆分器 + 存储器
+
 ## 核心 API
 
 ### 文档加载器

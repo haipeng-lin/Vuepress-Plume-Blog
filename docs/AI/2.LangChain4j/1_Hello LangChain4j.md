@@ -4,13 +4,26 @@ createTime: 2025/12/14 18:23:32
 permalink: /AI/LangChain4j/
 ---
 
-
 ## 基础知识
 
+一个将 LLM （语言大模型）**快速且简单**的集成到 Java 应用程序中的大模型应用框架
 
-相关链接：
+链接：
 
-- [Langchain4j 中文文档](https://docs.langchain4j.info/)
+- [LangChain4j中文文档](https://docs.langchain4j.info/))
+
+## 核心功能
+
+- 集成 LLM 提供商
+- 集成嵌入（向量）存储
+- 集成嵌入模型
+- RAG（检索-增强-生成）
+
+## 使用场景
+
+- 智能辅助客服
+- 知识库
+- 处理大量非结构化数据（文件、网页等）并从中提取结构化信息
 
 
 ## 动手实操
