@@ -25,14 +25,12 @@ export default defineNavbarConfig([
         link: "/computer-basics/",
         icon: "ic:outline-computer",
       },
-      { text: "备忘录", link: "/memorandum/Git/", icon: "circum:memo-pad" },
     ],
   },
   {
-    text: "碎碎念",
+    text: "记录",
     icon: "material-symbols:camera-rounded",
     items: [
-      { text: "音乐馆", link: "/memory/music/", icon: "mdi:music" },
       { text: "诗词", link: "/memory/poem/", icon: "icon-park-solid:like" },
       {
         text: "足迹",
@@ -44,30 +42,52 @@ export default defineNavbarConfig([
         link: "/memory/movie/",
         icon: "material-symbols:movie-info-rounded",
       },
+      { text: "备忘录", link: "/memorandum/Git/", icon: "circum:memo-pad" },
       { text: "网址导航", link: "/memory/site-collect/", icon: "ion:navigate" },
     ],
   },
   {
-    text: "项目",
-    icon: "material-symbols:water-full-rounded",
+    text: "好玩",
+    icon: "typcn:point-of-interest",
     items: [
       {
-        text: "项目集合",
-        link: "/project/",
-        icon: "fa7-solid:project-diagram",
+        text: "音乐馆",
+        link: "https://music.haipeng-lin.cn",
+        icon: "mdi:music",
       },
       {
-        text: "项目管控流式平台",
-        link: "/project/project-stream/",
-        icon: "ant-design:project-filled",
+        text: "烟花秀",
+        link: "https://firework.haipeng-lin.cn",
+        icon: "streamline-freehand:fireworks-2",
       },
       {
-        text: "知识交流平台",
-        link: "/project/knowledge-stream/",
-        icon: "fluent:stream-20-filled",
+        text: "站点监测",
+        link: "https://status.haipeng-lin.cn/",
+        icon: "pajamas:status-health",
       },
     ],
   },
+  // {
+  //   text: "项目",
+  //   icon: "material-symbols:water-full-rounded",
+  //   items: [
+  //     {
+  //       text: "项目集合",
+  //       link: "/project/",
+  //       icon: "fa7-solid:project-diagram",
+  //     },
+  //     {
+  //       text: "项目管控流式平台",
+  //       link: "/project/project-stream/",
+  //       icon: "ant-design:project-filled",
+  //     },
+  //     {
+  //       text: "知识交流平台",
+  //       link: "/project/knowledge-stream/",
+  //       icon: "fluent:stream-20-filled",
+  //     },
+  //   ],
+  // },
   {
     text: "关于",
     link: "/about-me/",
