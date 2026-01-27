@@ -3,54 +3,10 @@
     <div class="container">
       <canvas ref="canvasRef"></canvas>
 
-      <!-- 第一行 -->
-      <div class="about-me">
-        <div class="about-me-3-2-row">
-          <AboutMe />
-          <AboutMeText>
-            <template #motto>
-              <slot name="motto">
-                <p class="about-me-card-title-normal">𝓂𝑜𝓉𝓉𝑜</p>
-                <p class="about-me-card-text-big">路漫漫其修远兮</p>
-                <p class="about-me-card-text-big about-me-card-text-color">
-                  吾将上下而求索
-                </p>
-              </slot>
-            </template>
-          </AboutMeText>
-        </div>
-
-        <!-- 第二行 -->
-        <div class="about-me-3-2-row">
-          <AboutMeSkill />
-          <AboutMeLife />
-        </div>
-
-        <!-- 第三行 -->
-        <div class="about-me-1-1-row" style="margin-bottom: 20px">
-          <AboutMeText>
-            <template #motto>
-              <slot name="motto">
-                <p class="about-me-card-title-normal">𝓈𝓁𝑜𝑔𝒶𝓃</p>
-                <p class="about-me-card-text-big">
-                  前方是<span style="color: #3a5ccc">未知</span>&ensp;迎面是<span style="color: #3a5ccc">海风</span>
-                </p>
-                <p class="about-me-card-text-big">
-                  塞壬的歌会诱人忘记<span style="color: #d53737">初衷</span>
-                </p>
-              </slot>
-            </template>
-          </AboutMeText>
-          <AboutMeCharacter />
-        </div>
-
-        <!-- 第四行 -->
-        <!-- <div class="about-me-1-row">
-                <AboutMeFriendLink />
-            </div> -->
-      </div>
+      <Carousel />
+      <CategoryPostList />
     </div>
-    <VPPosts :home-posts="true" />
+    <!-- <VPPosts :home-posts="true" /> -->
   </div>
 </template>
 
@@ -62,6 +18,9 @@ import AboutMeText from "./AboutMeText.vue";
 import AboutMeSkill from "./AboutMeSkill.vue";
 import AboutMeCharacter from "./AboutMeCharacter.vue";
 import AboutMeLife from "./AboutMeLife.vue";
+import Carousel from "../Carousel.vue";
+import CategoryPostList from "../CategoryPostList.vue";
+
 import AboutMeFriendLink from "./AboutMeFriendLink.vue";
 
 interface Comet {

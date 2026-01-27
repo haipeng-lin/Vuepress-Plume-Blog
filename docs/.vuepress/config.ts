@@ -4,16 +4,17 @@ import { defineNoteConfig, plumeTheme } from "vuepress-theme-plume";
 
 import { getDirname, path } from "vuepress/utils";
 const __dirname = getDirname(import.meta.url);
+import { blogDataPlugin } from "./plugin/blog-data-plugin";
 
 export default defineUserConfig({
   port: 88,
 
-  alias: {
-    "@theme/VPDocMeta.vue": path.resolve(
-      __dirname,
-      "./component/theme/MyVPDocMeta.vue"
-    ),
-  },
+  // alias: {
+  //   "@theme/VPDocMeta.vue": path.resolve(
+  //     __dirname,
+  //     "./component/theme/MyVPDocMeta.vue"
+  //   ),
+  // },
   lang: "zh-CN",
   title: "𝙁𝙡𝙖𝙨𝙝",
 
@@ -181,5 +182,31 @@ export default defineUserConfig({
         state.env._gpt_injected = true;
       }
     });
+  },
+
+  plugins: [
+    blogDataPlugin(), // 就像引入官方插件一样
+  ],
+  // 关键：在 VuePress 准备阶段提取数据
+  onPrepared: async (app) => {
+    const carouselPosts = app.pages
+      .filter((page) => page.frontmatter.carousel === true)
+      .sort((a, b) => {
+        const orderA = (a.frontmatter.carouselOrder as number) || 99;
+        const orderB = (b.frontmatter.carouselOrder as number) || 99;
+        return orderA - orderB;
+      })
+      .slice(0, 5)
+      .map((page) => ({
+        title: page.title,
+        path: page.path,
+        frontmatter: page.frontmatter,
+      }));
+
+    // 将过滤后的数据写入临时文件，供前端调用
+    await app.writeTemp(
+      "carouselPosts.js",
+      `export const carouselPosts = ${JSON.stringify(carouselPosts)}`
+    );
   },
 });
