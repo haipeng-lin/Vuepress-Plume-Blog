@@ -11,7 +11,9 @@ excerpt: "此篇记录了美化丰富 Vuepress-Plume 主题之路，包含了首
 tags:
   - Vuepress
   - 记录
-sticky: 101
+carousel: true
+carouselOrder: 2
+carouselItemBg: "#19cfb3"
 ---
 
 ## 首页
@@ -599,11 +601,11 @@ config:
 
 ## 文章摘要
 
-&emsp;&emsp;嘿嘿，由于之前在 Hexo 引入过  TianliGPT 来实现文章摘要，体验下来还是蛮不错的，但是一旦文章内容有变，便命中不了之前生成的记录，所以又再消耗额度，随着 Hexo 的远去，TianliGPT 也没有接触过了。最近偶然在网上刷到一篇《0成本实现 TianliGPT》，芜湖，解锁新大陆，遂加入这一个本地的 AI 摘要，以下是实现过程
+&emsp;&emsp;嘿嘿，由于之前在 Hexo 引入过 TianliGPT 来实现文章摘要，体验下来还是蛮不错的，但是一旦文章内容有变，便命中不了之前生成的记录，所以又再消耗额度，随着 Hexo 的远去，TianliGPT 也没有接触过了。最近偶然在网上刷到一篇《0 成本实现 TianliGPT》，芜湖，解锁新大陆，遂加入这一个本地的 AI 摘要，以下是实现过程
 
 参考文章：
 
-- [SimpleWordBI-AI摘要](https://simpleword.bid/article/%E6%9D%82%E9%A1%B9/vitepress/AI%E6%91%98%E8%A6%81.html)
+- [SimpleWordBI-AI 摘要](https://simpleword.bid/article/%E6%9D%82%E9%A1%B9/vitepress/AI%E6%91%98%E8%A6%81.html)
 - [0 成本实现 TianliGPT，实现纯本地的 AI 摘要](https://blog.imsyy.top/posts/2024/0218)
 
 效果图：
@@ -1003,7 +1005,6 @@ import { defineUserConfig } from "vuepress";
 import { defineNoteConfig, plumeTheme } from "vuepress-theme-plume";
 
 export default defineUserConfig({
-
   extendsMarkdown: (md) => {
     md.core.ruler.before("normalize", "inject-content", (state) => {
       const frontmatter = state.env.frontmatter;
@@ -1133,7 +1134,7 @@ const initMap = () => {
 
   let adCode = [];
   for (var i = 0; i < cityList.length; i++) {
-    adCode.push(cityList[i].adcode)
+    adCode.push(cityList[i].adcode);
   }
 
   const mapContainer = document.getElementById("mapContainer");
@@ -1155,7 +1156,7 @@ const initMap = () => {
     });
     mapInstance.setMapStyle("amap://styles/whitesmoke");
 
-    // 填充省份颜色 
+    // 填充省份颜色
     const disProvince = new AMap.DistrictLayer.Province({
       zIndex: 12,
       zooms: [2, 15],
@@ -1290,8 +1291,6 @@ createTime: 2025/01/16 12:47:43
 
 <FootMap></FootMap>
 ```
-
-
 
 ## 藏宝阁
 
@@ -1705,17 +1704,22 @@ readingTime: false
 
 自定义组件：
 
-```vue title="/docs/.vuepress/component/APlayer/index.vue" 
+```vue title="/docs/.vuepress/component/APlayer/index.vue"
 <template>
-    <div class="player-wrapper">
-        <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
-            <el-tab-pane v-for="tab in tabConfig" :key="tab.name" :label="tab.label" :name="tab.name">
-                <div class="music-container">
-                    <div :id="tab.id" class="aplayer-instance"></div>
-                </div>
-            </el-tab-pane>
-        </el-tabs>
-    </div>
+  <div class="player-wrapper">
+    <el-tabs v-model="activeName" class="custom-tabs" @tab-click="handleClick">
+      <el-tab-pane
+        v-for="tab in tabConfig"
+        :key="tab.name"
+        :label="tab.label"
+        :name="tab.name"
+      >
+        <div class="music-container">
+          <div :id="tab.id" class="aplayer-instance"></div>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
 
 <script name="MyPlayer" lang="ts" setup>
@@ -1727,155 +1731,154 @@ const activeName = ref("first");
 const players: Record<string, any> = {};
 
 const tabConfig = [
-    { label: "2024年歌单", name: "first", id: "aplayer2024", data: audio2024 },
-    { label: "2023年歌单", name: "second", id: "aplayer2023", data: audio2023 },
-    { label: "2022年歌单", name: "third", id: "aplayer2022", data: audio2022 },
-    { label: "2021年歌单", name: "fourth", id: "aplayer2021", data: audio2021 },
+  { label: "2024年歌单", name: "first", id: "aplayer2024", data: audio2024 },
+  { label: "2023年歌单", name: "second", id: "aplayer2023", data: audio2023 },
+  { label: "2022年歌单", name: "third", id: "aplayer2022", data: audio2022 },
+  { label: "2021年歌单", name: "fourth", id: "aplayer2021", data: audio2021 },
 ];
 
 async function addMyAudio() {
-    const { default: APlayer } = await import("aplayer");
+  const { default: APlayer } = await import("aplayer");
 
-    const createPlayer = (id: string, audioData: any, isAutoplay = false) => {
-        const container = document.getElementById(id);
-        if (!container) return null;
+  const createPlayer = (id: string, audioData: any, isAutoplay = false) => {
+    const container = document.getElementById(id);
+    if (!container) return null;
 
-        return new APlayer({
-            container: container,
-            audio: audioData,
-            showlrc: true,
-            lrcType: 3,
-            listMaxHeight: 1000,
-            loop: "all",
-            order: "list",
-            autoplay: isAutoplay,
-        });
-    };
-
-    // 根据配置自动初始化所有播放器
-    tabConfig.forEach(tab => {
-        players[tab.name] = createPlayer(tab.id, tab.data, tab.name === "first");
+    return new APlayer({
+      container: container,
+      audio: audioData,
+      showlrc: true,
+      lrcType: 3,
+      listMaxHeight: 1000,
+      loop: "all",
+      order: "list",
+      autoplay: isAutoplay,
     });
+  };
+
+  // 根据配置自动初始化所有播放器
+  tabConfig.forEach((tab) => {
+    players[tab.name] = createPlayer(tab.id, tab.data, tab.name === "first");
+  });
 }
 
 const handleClick = (pane: any) => {
-    const targetName = pane.paneName;
-    Object.keys(players).forEach((key) => {
-        if (key !== targetName && players[key]) {
-            players[key].pause();
-        }
-    });
+  const targetName = pane.paneName;
+  Object.keys(players).forEach((key) => {
+    if (key !== targetName && players[key]) {
+      players[key].pause();
+    }
+  });
 };
 
 onMounted(() => {
-    addMyAudio();
+  addMyAudio();
 });
 </script>
 
 <style scoped>
 /* 定义颜色变量 */
 .player-wrapper {
-    --theme-color: rgb(75, 209, 230);
-    --theme-color-dark: rgb(140, 198, 205);
-    padding: 10px;
-    max-width: 1000px;
-    margin: 0 auto;
+  --theme-color: rgb(75, 209, 230);
+  --theme-color-dark: rgb(140, 198, 205);
+  padding: 10px;
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
 /* 1. 取消标签页选中项的下划线（指示条） */
 :deep(.el-tabs__active-bar) {
-    display: none !important;
+  display: none !important;
 }
 
 /* 2. 取消标签页头部的长灰色底线 */
 :deep(.el-tabs__nav-wrap::after) {
-    display: none !important;
+  display: none !important;
 }
 
 /* Tab 居中 */
 :deep(.el-tabs__nav-scroll) {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 /* 未选中状态 */
 :deep(.el-tabs__item) {
-    font-size: 1.1rem;
-    color: #999;
-    padding: 0 35px;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    font-family: "LXGW WenKai GB", sans-serif;
+  font-size: 1.1rem;
+  color: #999;
+  padding: 0 35px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: "LXGW WenKai GB", sans-serif;
 }
 
 /* 鼠标悬停 */
 :deep(.el-tabs__item:hover) {
-    color: var(--theme-color-dark);
-    transform: translateY(-2px);
-    /* 悬停微动增加反馈感 */
+  color: var(--theme-color-dark);
+  transform: translateY(-2px);
+  /* 悬停微动增加反馈感 */
 }
 
 :deep(.el-tabs__item.is-active) {
-    color: var(--theme-color);
-    font-weight: bold;
-    font-size: 1.2rem;
-    text-shadow: 0 4px 10px rgba(170, 218, 225, 0.3);
+  color: var(--theme-color);
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-shadow: 0 4px 10px rgba(170, 218, 225, 0.3);
 }
 
 /* 播放器容器 */
 .music-container {
-    display: flex;
-    justify-content: center;
-    padding-top: 5px;
-    animation: fadeIn 0.6s ease-out;
+  display: flex;
+  justify-content: center;
+  padding-top: 5px;
+  animation: fadeIn 0.6s ease-out;
 }
 
 .aplayer-instance {
-    width: 80%;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05),
-        0 8px 25px rgba(170, 218, 225, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    border: 1px solid rgba(170, 218, 225, 0.2);
+  width: 80%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05), 0 8px 25px rgba(170, 218, 225, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(170, 218, 225, 0.2);
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* APlayer 字体应用 */
 :deep(.aplayer) {
-    font-family: "LXGW WenKai GB", sans-serif !important;
+  font-family: "LXGW WenKai GB", sans-serif !important;
 }
 
 /* 适配移动端 */
 @media (max-width: 768px) {
-    .aplayer-instance {
-        width: 100%;
-    }
+  .aplayer-instance {
+    width: 100%;
+  }
 
-    :deep(.el-tabs__item) {
-        padding: 0 15px;
-        font-size: 0.95rem;
-    }
+  :deep(.el-tabs__item) {
+    padding: 0 15px;
+    font-size: 0.95rem;
+  }
 
-    :deep(.el-tabs__item.is-active) {
-        font-size: 1.05rem;
-    }
+  :deep(.el-tabs__item.is-active) {
+    font-size: 1.05rem;
+  }
 }
 </style>
 ```
 
 新增数据：
 
-```ts title="/docs/.vuepress/component/APlayer/data.ts" 
+```ts title="/docs/.vuepress/component/APlayer/data.ts"
 // 定义歌曲对象的接口
 export interface Song {
   name: string;
@@ -2212,4 +2215,4 @@ export default defineUserConfig({
 });
 ```
 
-## 
+##

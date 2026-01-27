@@ -13,6 +13,9 @@ tags:
   - 浏览量
 show: true
 articleGPT: 这篇文章讲了在 VuePress 博客中集成百度统计并展示浏览量的全过程。作者记录了申请 API、配置路由埋点、利用反向代理解决跨域及重写主题组件的技术细节。针对构建时的 SSR 报错，博主也给出了判定环境的修复方案。内容涵盖接口调试与生产部署，是一份详尽的功能开发指南。
+carousel: true
+carouselOrder: 5
+carouselItemBg: "#19cfb3"
 ---
 
 ## 概述
