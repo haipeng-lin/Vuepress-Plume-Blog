@@ -24,13 +24,14 @@ export default defineUserConfig({
     ["script", {}, `window.DENG_CONFIG = { text: '元旦快乐' };`],
     // 灯笼脚本
     // [ 'script', { type: 'text/javascript', src: '/js/denglong.js' } ],
+    // 头像
     [
       "link",
       {
         rel: "icon",
         type: "image/png",
         size: "32x32",
-        href: "/images/avatar.jpg",
+        href: "/images/avatar.webp",
       },
     ],
     [
@@ -62,7 +63,7 @@ export default defineUserConfig({
     hostname: "https://haipeng-lin.cn",
 
     profile: {
-      avatar: "/images/avatar.jpg",
+      avatar: "/images/avatar.webp",
       name: "𝙁𝙡𝙖𝙨𝙝",
       description: "保持热爱，奔赴山海",
       location: "广州 | 中国",
@@ -110,7 +111,7 @@ export default defineUserConfig({
     },
 
     // logo
-    logo: "/images/avatar.jpg",
+    logo: "/images/avatar.webp",
 
     // 贡献者2
     // contributors: true,

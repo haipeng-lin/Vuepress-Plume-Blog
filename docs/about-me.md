@@ -10,14 +10,12 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
     <div class="talk-word"> Welcome to my blog ~ </div>
 </div>
 
-
-<!-- 个人简介 -->
 <h2>个人简介</h2>
 <div class="profile-card-inner">
 	<div class="profile-left-side">
 		<div class="profile-image-wrapper">
 			<div class="profile-image">
-				<img class="avatar entered loaded" src="/images/avatar.jpg" data-lazy-src="https://www.hudi.space/img/avator.jpg" alt="博主照片" data-ll-status="loaded">
+				<img class="avatar entered loaded" src="/images/avatar.webp" data-lazy-src="https://www.hudi.space/img/avator.jpg" alt="博主照片" data-ll-status="loaded">
 			</div>
 		</div>
 		<div class="profile-info">
@@ -37,7 +35,6 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
 		</div>
 	</div>
 </div>
-
 
 <div class="intro-timeline">
 	<div class="timeline-item">
@@ -83,8 +80,6 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
 		</div>
 	</div>
 </div>
-
-
 
 <!-- 生活剪影 -->
 <section class="life-moments">
@@ -145,7 +140,6 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
 	</div>
 </section>
 
-
 <!-- 站点汇总 -->
 <section class="sites">
 	<h2>站点集合</h2>
@@ -198,11 +192,7 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
 	</div>
 </section>
 
-
-
-
 <h2>一些闲聊</h2>
-
 
 <div class="triangle">
     <ul>
@@ -215,19 +205,18 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
     </ul>
 </div>
 
-
 ::: tip 本站来源
-   &emsp;&emsp;此小破站源于𝙆𝙞𝙖𝙣𝙜的兴趣爱好，未来𝙆𝙞𝙖𝙣𝙜会努力更新维护此站。此站基于 **vuepress** 搭建，使用 **phume** 主题，部署于阿里云。
+&emsp;&emsp;此小破站源于 𝙆𝙞𝙖𝙣𝙜 的兴趣爱好，未来 𝙆𝙞𝙖𝙣𝙜 会努力更新维护此站。此站基于 **vuepress** 搭建，使用 **phume** 主题，部署于阿里云。
 
-   &emsp;&emsp;在高考完的那个暑假，想先在网上先自学 C语言 的一些基础知识，笨鸟先飞，亲能补拙嘛，便注册了一个 CSDN 账号，并按照网上的教程成功安装了 VS2019 和打印了 **“Hello，World”** ，还记得当时能高兴很久hhh，毕竟第一次接触到代码。当时还没有记录输出博客笔记的想法，更多的是查找资料、以及如何解决项目中遇到的 Bug 等等，但是这也算是梦开始的地方！
+&emsp;&emsp;在高考完的那个暑假，想先在网上先自学 C 语言 的一些基础知识，笨鸟先飞，亲能补拙嘛，便注册了一个 CSDN 账号，并按照网上的教程成功安装了 VS2019 和打印了 **“Hello，World”** ，还记得当时能高兴很久 hhh，毕竟第一次接触到代码。当时还没有记录输出博客笔记的想法，更多的是查找资料、以及如何解决项目中遇到的 Bug 等等，但是这也算是梦开始的地方！
 
 &emsp;&emsp;大二的时候，学校开设了一门 JS 课，那是我第一次接触到前端样式，虽然样式调整过程中挺繁琐的，但是当样式效果出来后，觉得还挺好玩有趣的。
 
-&emsp;&emsp;大三的时候，开始意识到写博客笔记的重要性了，当时看过印象最深的一句话：学习不单单是输入，还需要输出。写笔记发博客和讲给同学听都是输出知识的方式，所以便开始了博客之旅，一开始是在 **CSDN** 记录学习笔记，嘿嘿后面也积累了2000+粉丝（有一小部分是僵尸粉，但是一想着能帮助到人就开心，特别是评论求助问题的），后面觉得 CSDN 内容有点单一，增加不了个性化页面，想搭建一个属于自己的博客。
+&emsp;&emsp;大三的时候，开始意识到写博客笔记的重要性了，当时看过印象最深的一句话：学习不单单是输入，还需要输出。写笔记发博客和讲给同学听都是输出知识的方式，所以便开始了博客之旅，一开始是在 **CSDN** 记录学习笔记，嘿嘿后面也积累了 2000+粉丝（有一小部分是僵尸粉，但是一想着能帮助到人就开心，特别是评论求助问题的），后面觉得 CSDN 内容有点单一，增加不了个性化页面，想搭建一个属于自己的博客。
 
-&emsp;&emsp;大四的时候，基于 **Hexo** 和 **Butterfly** 主题搭建了一个静态博客网站，照着各位大佬的提供的样式来copy代码，也不懂什么前端样式原理，单单是复制出别人的样式，就足以令我开心兴奋。（那时候，经常捣鼓捣鼓着忘记吃饭）相较于 CSDN 来说，多了很多个性化的东西：自述页面、吐槽闲聊、电影书籍收藏、倒计时日历等等，旧站点详情：<a href="life.haipeng-lin.cn">life.haipeng-lin.cn</a>。注意：旧站点已停更。
+&emsp;&emsp;大四的时候，基于 **Hexo** 和 **Butterfly** 主题搭建了一个静态博客网站，照着各位大佬的提供的样式来 copy 代码，也不懂什么前端样式原理，单单是复制出别人的样式，就足以令我开心兴奋。（那时候，经常捣鼓捣鼓着忘记吃饭）相较于 CSDN 来说，多了很多个性化的东西：自述页面、吐槽闲聊、电影书籍收藏、倒计时日历等等，旧站点详情：<a href="life.haipeng-lin.cn">life.haipeng-lin.cn</a>。注意：旧站点已停更。
 
-&emsp;&emsp;再到后面，随着笔记的日益增加，Hexo 的缺点也随着暴露，同一分类/专题下的文章观看的效果不是很好，加载速度有点慢（样式很多/(ㄒoㄒ)/），所以最后搬到了 **vuepress** ，更轻量级、加载更快。
+&emsp;&emsp;再到后面，随着笔记的日益增加，Hexo 的缺点也随着暴露，同一分类/专题下的文章观看的效果不是很好，加载速度有点慢（样式很多/(ㄒ o ㄒ)/），所以最后搬到了 **vuepress** ，更轻量级、加载更快。
 
 :::
 
@@ -278,28 +267,15 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
     </div>
 </div>
 
-
 <h2>结束语</h2>
-
 
 <div class="talk-container">
     <div class="talk-word"> 一切均在不言中 ~ </div>
 </div>
 
-
-
-
-
 <div class="about-me">
 
-
-
-
 </div>
-
-
-
-
 
 <style>
 
@@ -1364,4 +1340,3 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
 }
 
 </style>
-

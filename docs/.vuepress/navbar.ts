@@ -2,7 +2,7 @@ import { defineNavbarConfig } from "vuepress-theme-plume";
 
 export default defineNavbarConfig([
   { text: "首页", link: "/", icon: "material-symbols:home" },
-  { text: "博客", link: "/blog/archives/", icon: "material-symbols:article" },
+  { text: "博客", link: "/blog/", icon: "material-symbols:article" },
   {
     text: "笔记",
     icon: "mdi:learn-outline",
@@ -50,6 +50,11 @@ export default defineNavbarConfig([
     text: "好玩",
     icon: "typcn:point-of-interest",
     items: [
+      {
+        text: "相册馆",
+        link: "https://picture.haipeng-lin.cn/grid",
+        icon: "f7:photo",
+      },
       {
         text: "音乐馆",
         link: "https://music.haipeng-lin.cn",

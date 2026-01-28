@@ -105,7 +105,7 @@ const formatDate = (date) => date ? new Date(date).toISOString().split('T')[0] :
 
 .layout-left {
   // 占 3/4
-  flex: 3;
+  flex: 5;
   height: 100%;
   cursor: pointer;
   overflow: hidden;
@@ -170,7 +170,7 @@ const formatDate = (date) => date ? new Date(date).toISOString().split('T')[0] :
 
 /* 右侧：整体区域背景联动 */
 .layout-right {
-  flex: 1;
+  flex: 2;
   border-left: 1px solid var(--vp-c-divider);
   display: flex;
   flex-direction: column;

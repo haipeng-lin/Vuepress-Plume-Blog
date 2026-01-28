@@ -4,7 +4,7 @@
       <canvas ref="canvasRef"></canvas>
 
       <Carousel />
-      <CategoryPostList />
+      <ArticleCategory />
     </div>
     <!-- <VPPosts :home-posts="true" /> -->
   </div>
@@ -19,7 +19,7 @@ import AboutMeSkill from "./AboutMeSkill.vue";
 import AboutMeCharacter from "./AboutMeCharacter.vue";
 import AboutMeLife from "./AboutMeLife.vue";
 import Carousel from "../Carousel.vue";
-import CategoryPostList from "../CategoryPostList.vue";
+import ArticleCategory from "../ArticleCategory.vue";
 
 import AboutMeFriendLink from "./AboutMeFriendLink.vue";
 
