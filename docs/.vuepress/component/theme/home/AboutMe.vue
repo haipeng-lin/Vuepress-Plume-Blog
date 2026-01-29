@@ -23,7 +23,7 @@
   background-image: linear-gradient(120deg, var(--vp-c-brand-3), var(--vp-c-brand-soft));
   background-size: 200% 200%;
 
-  > p {
+  >p {
     color: var(--vp-c-text-1);
   }
 }

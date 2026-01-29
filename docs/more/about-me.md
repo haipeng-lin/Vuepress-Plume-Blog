@@ -15,7 +15,7 @@ title: 𝙁𝙡𝙖𝙨𝙝的自述
 	<div class="profile-left-side">
 		<div class="profile-image-wrapper">
 			<div class="profile-image">
-				<img class="avatar entered loaded" src="/images/avatar.webp" data-lazy-src="https://www.hudi.space/img/avator.jpg" alt="博主照片" data-ll-status="loaded">
+				<img class="avatar entered loaded" src="/images/avatar.webp" data-lazy-src="https://www.hudi.space/img/avator.jpg" data-ll-status="loaded">
 			</div>
 		</div>
 		<div class="profile-info">

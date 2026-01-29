@@ -31,15 +31,15 @@ export default defineNavbarConfig([
     text: "记录",
     icon: "material-symbols:camera-rounded",
     items: [
-      { text: "诗词", link: "/memory/poem/", icon: "icon-park-solid:like" },
+      { text: "诗词", link: "/love/poem/", icon: "icon-park-solid:like" },
       {
         text: "足迹",
-        link: "/memory/foot/",
+        link: "/love/foot/",
         icon: "material-symbols:barefoot",
       },
       {
         text: "藏宝阁",
-        link: "/memory/movie/",
+        link: "/love/movie/",
         icon: "material-symbols:movie-info-rounded",
       },
       { text: "备忘录", link: "/memorandum/Git/", icon: "circum:memo-pad" },
@@ -95,7 +95,7 @@ export default defineNavbarConfig([
   // },
   {
     text: "关于",
-    link: "/about-me/",
+    link: "/love/about/",
     icon: "material-symbols-light:id-card-rounded",
   },
 ]);

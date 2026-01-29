@@ -7,6 +7,7 @@ import "./public/css/custom.css";
 
 import { getPV } from "./public/api/tongji-data.js";
 
+import About from "./component/About/index.vue";
 import APlayer from "./component/APlayer/index.vue";
 import ArticleGPT from "./component/ArticleGPT/index.vue";
 import FootMap from "./component/FootMap/index.vue";
@@ -30,16 +31,15 @@ const stats = reactive({
 
 export default defineClientConfig({
   enhance({ app, router, siteData }) {
-    // 注册element-plus
+    // 注册组件
     app.use(ElementPlus);
-    // 其他逻辑
+    app.component("About", About);
     app.component("APlayer", APlayer);
     app.component("ArticleGPT", ArticleGPT);
     app.component("FootMap", FootMap);
     app.component("Movie", Movie);
     app.component("Poem", Poem);
     app.component("SakuraManager", SakuraManager);
-
     app.component("CustomHome", CustomHome);
     app.component("VPPosts", VPPosts);
     app.component("RepoCard", RepoCard);

@@ -52,8 +52,6 @@ export default defineUserConfig({
       "script",
       { type: "text/javascript", src: "https://webapi.amap.com/loader.js" },
     ],
-    // 背景：樱花特效
-    // ['meta', { referrer: 'no-referrer' }]
   ],
 
   theme: plumeTheme({
@@ -74,6 +72,7 @@ export default defineUserConfig({
     markdown: {
       icon: { provider: "iconify" },
       demo: true,
+      timeline: true,
     },
 
     plugins: {
