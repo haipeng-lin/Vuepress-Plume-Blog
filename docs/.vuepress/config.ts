@@ -17,8 +17,16 @@ export default defineUserConfig({
   // },
   lang: "zh-CN",
   title: "𝙁𝙡𝙖𝙨𝙝",
-
   head: [
+    [
+      "script",
+      {
+        defer: true,
+        src: "https://umami.haipeng-lin.cn/script.js",
+        "data-website-id": "cd6d1d13-8962-4997-a516-a31e563bec5c",
+        "data-domains": "blog.haipeng-lin.cn",
+      },
+    ],
     ["script", { type: "text/javascript", src: "/js/tongji-data.js" }],
     // 全局配置变量
     ["script", {}, `window.DENG_CONFIG = { text: '元旦快乐' };`],
