@@ -3,11 +3,6 @@ title: Certbot工具配置ssl证书
 createTime: 2025/12/04 23:52:53
 permalink: /blog/cfyw739h/
 cover: https://img.haipeng-lin.cn/20251214184352.jpg
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: 配置自动化部署ssl证书的工具：Certbot
 tags:
   - 运维
 show: true

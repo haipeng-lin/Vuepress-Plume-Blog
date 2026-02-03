@@ -2,14 +2,8 @@
 title: SpringBoot集成支付宝沙箱
 createTime: 2025/12/29 21:58:43
 permalink: /blog/qxc60hk5/
-cover: https://img.haipeng-lin.cn/20251230234727.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: '下载：[支付宝开放平台密钥工具] 安装并打开工具后，加签方式选"密钥"，加密算法选"RSA2"，最后生成应用公钥和应用私钥。到支付宝沙箱开放平台的接口加签方式，选择自定义密钥和公钥模式，粘贴上一步获取到的应用公钥，生成支付宝公钥'
+cover: https://cdn.haipeng-lin.cn/20251230234727.png
 tags:
-  - SpringBoot
   - 支付宝
 show: true
 articleGPT: 本文详述了 SpringBoot 集成支付宝沙箱支付的完整流程，涵盖沙箱环境搭建、RSA2 密钥配置及内网穿透工具的使用准备。文章深入解析了 SDK 依赖引入、支付表单生成及异步回调验签的核心代码逻辑。通过模拟从下单到支付成功的完整业务闭环，助力开发者快速掌握支付宝支付的接入技巧与技术细节。

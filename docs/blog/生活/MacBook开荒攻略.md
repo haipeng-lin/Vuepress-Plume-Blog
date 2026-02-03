@@ -2,12 +2,7 @@
 title: MacBook开荒攻略
 createTime: 2025/05/09 00:08:06
 permalink: /blog/kd40i16r/
-cover: https://img.haipeng-lin.cn/20251214222804.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: "由于mac的键盘和win的键盘位置不一样，已经习惯了win键盘操作的我，将外接键盘的 ctrl 键修饰为 command 键，以及将 command 键修饰为 ctrl 键；将内置键盘的 fn 键修饰为 command 键，以及将 command 键修饰为 fn 键"
+cover: https://cdn.haipeng-lin.cn/20251214222804.png
 tags:
   - macbook
 show: true

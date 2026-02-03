@@ -2,14 +2,8 @@
 title: SpringBoot集成RabbitMQ
 createTime: 2026/01/01 07:04:55
 permalink: /blog/alst6w8d/
-cover: https://img.haipeng-lin.cn/20260101072718.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: "此篇记录了SpringBoot集成RabbitMQ的实现过程"
+cover: https://cdn.haipeng-lin.cn/20260101072718.png
 tags:
-  - SpringBoot
   - RabbitMQ
 show: true
 articleGPT: 本文详细介绍了 Spring Boot 集成 RabbitMQ 的核心流程。涵盖从 Maven 依赖引入、YML 连接配置，到 Java 配置类中交换机、队列及绑定关系的声明。通过实战演示了主题交换机的通配符匹配逻辑，并提供了消息监听消费与单元测试发送的完整代码实现，助力快速构建可靠的异步消息体系。

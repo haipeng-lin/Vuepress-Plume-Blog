@@ -2,12 +2,7 @@
 title: Vuepress | 爆炸粒子烟花
 createTime: 2025/02/11 11:43:39
 permalink: /blog/dhg6719f/
-cover: https://img.haipeng-lin.cn/20251002000400.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: 一直想给自己的博客加个点击鼠标特效的（没遇到心仪的—_—），昨天遇到一个特别好看的爆炸粒子烟花特效（虽然看久了有点花里胡哨的，但是目前站点先保留叭）。昨天捣鼓了半天，本地测试效果可以，部署到阿里云就不行了。今天查出原因：
+cover: https://cdn.haipeng-lin.cn/20251002000400.png
 tags:
   - 建站
   - 前端

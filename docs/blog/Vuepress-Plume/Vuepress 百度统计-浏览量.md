@@ -2,12 +2,7 @@
 title: Vuepress | 百度统计-浏览量
 createTime: 2025/12/20 23:52:15
 permalink: /blog/bm44ybq6/
-cover: https://img.haipeng-lin.cn/20251222234429.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: "此篇记录了实现统计 vuepress-theme-plume 主题的博客浏览量的过程，实现过程中通过不断的查找资料，理解代码，解决Bug，到最后成功看到效果时和日渐增长的阅读量，还是挺有成就感滴！"
+cover: https://cdn.haipeng-lin.cn/20251222234429.png
 tags:
   - 百度统计
   - 浏览量

@@ -2,12 +2,7 @@
 title: Vuepress-Plume | 美化总结
 createTime: 2025/11/15 14:47:21
 permalink: /blog/1fntzdqy/
-cover: https://img.haipeng-lin.cn/20260101081838.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: "此篇记录了美化丰富 Vuepress-Plume 主题之路，包含了首页、字体、足迹、浏览量、以及藏宝阁等等"
+cover: https://cdn.haipeng-lin.cn/20260101081838.png
 tags:
   - Vuepress
   - 记录

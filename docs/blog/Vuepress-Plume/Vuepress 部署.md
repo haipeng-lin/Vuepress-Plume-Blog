@@ -2,12 +2,7 @@
 title: Vuepress | 部署
 createTime: 2025/01/24 16:34:27
 permalink: /blog/jmh3sdmp/
-cover: https://img.haipeng-lin.cn/20251002162603.png
-coverStyle:
-  layout: left
-  ratio: "16:9"
-  width: 300
-excerpt: vuepress部署到阿里云服务器，前置条件：购买阿里云服务器和域名、域名备案（没备案，可使用公网ip访问）、服务器安装宝塔面板和Nginx
+cover: https://cdn.haipeng-lin.cn/20251002162603.png
 tags:
   - vuepress
 show: true
