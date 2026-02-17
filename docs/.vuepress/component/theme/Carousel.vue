@@ -11,9 +11,6 @@
             <div class="stage-overlay">
               <div class="text-group">
                 <h1 class="main-title">{{ activeArticle?.title }}</h1>
-                <p class="main-desc">
-                  {{ activeArticle?.frontmatter?.description }}
-                </p>
                 <div class="action-btn">
                   本站推荐 <span class="arrow">→</span>
                 </div>
@@ -169,18 +166,6 @@ const formatDate = (date) =>
   line-height: 1.2;
   font-weight: 800;
   margin: 0 0 0.5rem 0;
-}
-
-/* 3. 描述文字样式 */
-.layout-left .main-stage .main-desc {
-  opacity: 0.9;
-  font-size: 1rem;
-  line-height: 1.5;
-  margin-bottom: 0.2rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* 4. 按钮样式 */
