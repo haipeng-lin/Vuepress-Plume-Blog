@@ -21,6 +21,9 @@ import RepoCard from "vuepress-theme-plume/features/RepoCard.vue";
 
 import VPPosts from "../../node_modules/vuepress-theme-plume/lib/client/components/Posts/VPPosts.vue";
 
+import VPPostsAside from "../../node_modules/vuepress-theme-plume/lib/client/components/Posts/VPPostsAside.vue";
+
+
 import { useRoute } from "vue-router";
 
 import { onMounted, watch, reactive } from "vue";
@@ -42,6 +45,7 @@ export default defineClientConfig({
     app.component("SakuraManager", SakuraManager);
     app.component("CustomHome", CustomHome);
     app.component("VPPosts", VPPosts);
+    app.component("VPPostsAside", VPPostsAside);
     app.component("RepoCard", RepoCard);
 
     app.provide("globalStats", stats);
