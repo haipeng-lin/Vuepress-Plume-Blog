@@ -70,6 +70,11 @@ export default defineNavbarConfig([
         link: "https://status.haipeng-lin.cn/",
         icon: "pajamas:status-health",
       },
+      {
+        text: "数据统计",
+        link: "https://umami.haipeng-lin.cn/share/eelsAPIwSgtYO8s3",
+        icon: "pajamas:status-health",
+      }
     ],
   },
   // {
