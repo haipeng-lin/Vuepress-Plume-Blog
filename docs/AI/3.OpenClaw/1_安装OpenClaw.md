@@ -1,3 +1,8 @@
+---
+title: 1_安装OpenClaw
+createTime: 2026/04/22 17:22:50
+permalink: /AI/wtqq5neq/
+---
 ## 前言
 
 前提环境：
