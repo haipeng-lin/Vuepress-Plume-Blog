@@ -6,6 +6,12 @@ comment: false
 createTime: 2025/05/04 16:34:27
 ---
 
+## 模型中转
+
+<CardGrid cols="2">
+  <LinkCard icon="https://icon.bqb.cool/?url=https://w.ciykj.cn" title="TTAPI" href="https://w.ciykj.cn/dashboard" description="codex月卡 年卡" />
+</CardGrid>
+
 ## 图片
 
 <CardGrid cols="2">
