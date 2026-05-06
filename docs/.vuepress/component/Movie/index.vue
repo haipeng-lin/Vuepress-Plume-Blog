@@ -66,6 +66,20 @@ import { ref } from "vue";
 // 电影列表
 const movieList = ref([
     {
+        title: "寒战1994",
+        poster: "https://img.haipeng-lin.cn/1778047054473.png",
+        score: 5,
+        date: "2026-5-1",
+        status: "已看",
+    },
+    {
+        title: "飞驰人生3",
+        poster: "https://img.haipeng-lin.cn/1778047179394.png",
+        score: 4,
+        date: "2026-4-30",
+        status: "已看",
+    },
+    {
         title: "喋血双雄",
         poster: "https://img.haipeng-lin.cn/1777257789195.png",
         score: 4,
