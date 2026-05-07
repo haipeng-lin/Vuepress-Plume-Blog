@@ -15,7 +15,7 @@
 
 ```shell
 # clone 代码
-git clone git@gitee.com:linhaipengg/Vuepress-Plume-Blog.git
+git clone git@github.com:haipeng-lin/Vuepress-Plume-Blog.git
 
 # 安装依赖
 npm install
