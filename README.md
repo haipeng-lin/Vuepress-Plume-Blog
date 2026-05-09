@@ -2,7 +2,7 @@
 
 ## 介绍
 
-预览地址：[Flash](https://haipeng-lin.cn/)
+预览地址：[𝙁𝙡𝙖𝙨𝙝](https://blog.haipeng-lin.cn/)
 
 本站基于 Vuepress-Plume 主题构建，并进行美化，新特性如下：
 
@@ -13,9 +13,9 @@
 
 ## 使用教程
 
-````shell
+```shell
 # clone 代码
-git clone git@gitee.com:linhaipengg/Vuepress-Plume-Blog.git
+git clone git@github.com:haipeng-lin/Vuepress-Plume-Blog.git
 
 # 安装依赖
 npm install
@@ -25,5 +25,4 @@ npm run docs:dev
 
 # 部署
 npm run docs:build
-````
-
+```
