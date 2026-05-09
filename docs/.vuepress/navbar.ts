@@ -46,32 +46,32 @@ export default defineNavbarConfig([
       { text: "网址导航", link: "/memory/site-collect/", icon: "ion:navigate" },
     ],
   },
-  {
-    text: "好玩",
-    icon: "typcn:point-of-interest",
-    items: [
-      {
-        text: "相册馆",
-        link: "https://picture.haipeng-lin.cn/grid",
-        icon: "f7:photo",
-      },
-      {
-        text: "音乐馆",
-        link: "https://music.haipeng-lin.cn",
-        icon: "mdi:music",
-      },
-      {
-        text: "烟花秀",
-        link: "https://firework.haipeng-lin.cn",
-        icon: "streamline-freehand:fireworks-2",
-      },
-      {
-        text: "站点监测",
-        link: "https://status.haipeng-lin.cn/",
-        icon: "pajamas:status-health",
-      },
-    ],
-  },
+  // {
+  //   text: "好玩",
+  //   icon: "typcn:point-of-interest",
+  //   items: [
+  //     {
+  //       text: "相册馆",
+  //       link: "https://picture.haipeng-lin.cn/grid",
+  //       icon: "f7:photo",
+  //     },
+  //     {
+  //       text: "音乐馆",
+  //       link: "https://music.haipeng-lin.cn",
+  //       icon: "mdi:music",
+  //     },
+  //     {
+  //       text: "烟花秀",
+  //       link: "https://firework.haipeng-lin.cn",
+  //       icon: "streamline-freehand:fireworks-2",
+  //     },
+  //     {
+  //       text: "站点监测",
+  //       link: "https://status.haipeng-lin.cn/",
+  //       icon: "pajamas:status-health",
+  //     },
+  //   ],
+  // },
   // {
   //   text: "项目",
   //   icon: "material-symbols:water-full-rounded",
