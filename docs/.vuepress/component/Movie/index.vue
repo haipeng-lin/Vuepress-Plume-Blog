@@ -66,6 +66,27 @@ import { ref } from "vue";
 // 电影列表
 const movieList = ref([
     {
+        title: "伪钞重案",
+        poster: "https://img.haipeng-lin.cn/1778895786581.png",
+        score: 2,
+        date: "2026-5-15",
+        status: "已看",
+    },
+    {
+        title: "飞驰人生2",
+        poster: "https://img.haipeng-lin.cn/1778895605968.png",
+        score: 5,
+        date: "2026-5-14",
+        status: "已看",
+    },
+    {
+        title: "飞驰人生",
+        poster: "https://img.haipeng-lin.cn/1778895722251.png",
+        score: 4,
+        date: "2026-5-13",
+        status: "已看",
+    },
+    {
         title: "寒战1994",
         poster: "https://img.haipeng-lin.cn/1778047054473.png",
         score: 5,

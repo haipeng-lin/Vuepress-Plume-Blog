@@ -16,7 +16,7 @@ export default defineUserConfig({
   //   ),
   // },
   lang: "zh-CN",
-  title: "𝙁𝙡𝙖𝙨𝙝",
+  title: "𝙝𝙖𝙥𝙥𝙮𝙝𝙖𝙞",
   head: [
     [
       "script",
@@ -70,7 +70,7 @@ export default defineUserConfig({
 
     profile: {
       avatar: "/images/avatar.webp",
-      name: "𝙁𝙡𝙖𝙨𝙝",
+      name: "𝙝𝙖𝙥𝙥𝙮𝙝𝙖𝙞",
       description: "保持热爱，奔赴山海",
       location: "广州 | 中国",
       circle: true,
@@ -114,7 +114,8 @@ export default defineUserConfig({
     footer: {
       message:
         '欢迎光临小破站！<a href="https://beian.miit.gov.cn/#/Integrated/index" style="text-decoration:none">粤ICP备2025360098号-1</a>',
-      copyright: "© Copyright 2024-2026 All Rights Reserved. 版权所有：𝙁𝙡𝙖𝙨𝙝",
+      copyright:
+        "© Copyright 2024-2026 All Rights Reserved. 版权所有：𝙝𝙖𝙥𝙥𝙮𝙝𝙖𝙞",
     },
 
     // logo

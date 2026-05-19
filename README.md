@@ -2,7 +2,7 @@
 
 ## 介绍
 
-预览地址：[𝙁𝙡𝙖𝙨𝙝](https://blog.haipeng-lin.cn/)
+预览地址：[𝙝𝙖𝙥𝙥𝙮𝙝𝙖𝙞](https://blog.haipeng-lin.cn/)
 
 本站基于 Vuepress-Plume 主题构建，并进行美化，新特性如下：
 

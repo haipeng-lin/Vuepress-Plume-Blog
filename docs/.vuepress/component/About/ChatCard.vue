@@ -3,7 +3,7 @@
         <ul>
             <li class="textRight"><span>Hello！很幸运遇见你呀</span></li>
             <li class="textLeft left1"><span>Hi！</span></li>
-            <li class="textLeft left2"><span>你为什么叫 𝙁𝙡𝙖𝙨𝙝 呀？</span></li>
+            <li class="textLeft left2"><span>你为什么叫 𝙝𝙖𝙥𝙥𝙮𝙝𝙖𝙞 呀？</span></li>
             <li class="textRight"><span>和一款游戏的人物语音有关哇🥳</span></li>
             <li class="textLeft left3"><span>为什么会建这个小破站哩？</span></li>
             <li class="textRight"><span>请滑鼠标</span></li>
