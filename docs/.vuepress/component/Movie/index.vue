@@ -66,6 +66,13 @@ import { ref } from "vue";
 // 电影列表
 const movieList = ref([
     {
+        title: "熊出没·年年有熊",
+        poster: "https://img.haipeng-lin.cn/1781157018744.png",
+        score: 5,
+        date: "2026-6-6",
+        status: "超棒",
+    },
+    {
         title: "伪钞重案",
         poster: "https://img.haipeng-lin.cn/1778895786581.png",
         score: 2,
